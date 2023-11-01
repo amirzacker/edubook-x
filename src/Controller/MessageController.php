@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\User;
+use App\Entity\Conversation;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +22,20 @@ class MessageController extends AbstractController
         $messagesArray = [];
 
         foreach ($messages as $message) {
+
+            $senderArray = [];
+            $sender = $message->getSender();
+
+            $senderArray = [
+                'id' => $sender->getId(),
+                'username' => $sender->getUsername(),
+                'email' => $sender->getEmail(),
+            ];
+        
             $messagesArray[] = [
                 'id' => $message->getId(),
-                'conversationId' => $message->getConversation(),
-                'sender' => $message->getSender(),
+                'conversationId' => $message->getConversation()->getId(),
+                'sender' => $senderArray,
                 'text' => $message->getText(),
                 'createdAt' => $message->getCreatedAt(),
                 'updatedAt' => $message->getUpdatedAt(),
@@ -33,16 +45,32 @@ class MessageController extends AbstractController
         return $this->json($messagesArray);
     }
 
-    #[Route('/', name: 'create', methods: ['POST'])]
+    #[Route('/new', name: 'create', methods: ['POST'])]
     public function create(ManagerRegistry $doctrine, Request $request): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $data = json_decode($request->getContent(), true);
 
+        $conversationRepository = $entityManager->getRepository(Conversation::class);
+        $conversation = $conversationRepository->find($data['conversationId']);
+
+        if (!$conversation) {
+            return $this->json(['message' => 'Convesation not found!'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $userRepository = $entityManager->getRepository(User::class);
+        $sender = $userRepository->find($data['sender']);
+  
+        if (!$sender) {
+            return $this->json(['message' => 'User not found!'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
         $message = new Message();
         $message->setText($data['text']);
-        // $message->setConversation($conversation); // Assurez-vous d'avoir la conversation correcte
-
+        $message->setConversation($conversation);
+        $message->setSender($sender);
+        $message->setUpdatedAtValue();
+        $message->setCreatedAtValue();
         $entityManager->persist($message);
         $entityManager->flush();
 
