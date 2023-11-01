@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/project', name: 'api_project_')]
+#[Route('/api', name: 'api_')]
 class ProjectController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/project', name: 'index', methods: ['GET'])]
     public function index(ManagerRegistry $doctrine): JsonResponse
     {
         $projectRepository = $doctrine->getRepository(Project::class);
@@ -30,7 +30,7 @@ class ProjectController extends AbstractController
         return $this->json($projectsArray);
     }
 
-    #[Route('/', name: 'create', methods: ['POST'])]
+    #[Route('/project', name: 'create', methods: ['POST'])]
     public function create(ManagerRegistry $doctrine, Request $request): JsonResponse
     {
         $entityManager = $doctrine->getManager();
@@ -46,7 +46,7 @@ class ProjectController extends AbstractController
         return $this->json(['status' => 'Project created!']);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/project/{id}', name: 'show', methods: ['GET'])]
     public function show(ManagerRegistry $doctrine, int $id): JsonResponse
     {
         $projectRepository = $doctrine->getRepository(Project::class);
@@ -65,7 +65,7 @@ class ProjectController extends AbstractController
         return $this->json($projectArray);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[Route('/project/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(ManagerRegistry $doctrine, int $id): JsonResponse
     {
         $entityManager = $doctrine->getManager();
