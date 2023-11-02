@@ -1,5 +1,5 @@
 import React from 'react';
-import './header.css';
+import './Header.css';
 import logo from './logo.png';
 
 const Header = () =>{
@@ -8,7 +8,7 @@ const Header = () =>{
 
         <div className="logo-container">
             <img src={logo} className="logo" />
-            <div className="title">Edu</div>
+            <div className="title">EduBookX</div>
         </div>   
 
         <ul className="nav">
