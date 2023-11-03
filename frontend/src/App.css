@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux cartes de revenir à la ligne */
+  gap: 16px; /* Espacement entre les cartes */
+  justify-content: space-between; /* Distribue les cartes horizontalement */
+}
+
+
+/* Styles spécifiques pour CardBook, vous pouvez ajuster selon vos besoins */
+.CardBook {
+  max-width: 45%; /* Largeur des cartes individuelles */
+  /* Ajoutez d'autres styles si nécessaire */
+}
+

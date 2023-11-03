@@ -7,7 +7,17 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Header />
-        <CardBook />
+        <div className="main-content">
+            <div className="card-container">
+                <CardBook />
+                <CardBook />
+                <CardBook />
+                <CardBook />
+                <CardBook />
+                <CardBook />
+
+            </div>
+        </div>
         <Footer />
       </header>
     </div>

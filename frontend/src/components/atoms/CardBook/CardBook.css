@@ -1,0 +1,23 @@
+/* CardLibrary.css */
+.card-library {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux cartes de revenir à la ligne */
+    justify-content: center; /* Centre les cartes horizontalement */
+    gap: 20px; /* Espacement entre les cartes */
+    padding: 20px; /* Espacement autour de la bibliothèque de cartes */
+    margin-top: 8%;
+
+  }
+
+  .card {
+    background-color: white; /* Couleur de fond des cartes */
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Ombre pour les cartes */
+    padding: 16px; /* Espacement interne des cartes */
+    border-radius: 8px; /* Arrondi les coins de la carte */
+  }
+  
+  /* Pseudo-élément pour créer un effet de survol */
+  .card:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s;
+  }
