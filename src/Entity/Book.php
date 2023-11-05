@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -15,27 +17,27 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $author = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Publication::class)]

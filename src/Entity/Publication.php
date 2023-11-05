@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PublicationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 class Publication
@@ -12,23 +13,29 @@ class Publication
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["getPublication"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getPublication"])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
+    #[Groups(["getPublication"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getPublication"])]
     private ?string $book_state = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["getPublication"])]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["getPublication"])]
     private ?string $comment = null;
 
     public function getId(): ?int

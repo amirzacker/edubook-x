@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 #[ORM\Entity(repositoryClass: ConversationRepository::class)]
 class Conversation
 {
@@ -32,6 +33,7 @@ class Conversation
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'conversations')]
     #[Groups(["getConversation"])]
+
     private Collection $members;
 
     public function __construct()

@@ -21,6 +21,16 @@ class PublicationRepository extends ServiceEntityRepository
         parent::__construct($registry, Publication::class);
     }
 
+    public function findByUserId(int $userId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.user', 'u')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Publication[] Returns an array of Publication objects
 //     */
