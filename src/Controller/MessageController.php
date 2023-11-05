@@ -6,47 +6,30 @@ use App\Entity\Message;
 use App\Entity\User;
 use App\Entity\Conversation;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
 
-#[Route('/api/messages', name: 'api_messages_')]
+#[Route('/api', name: 'api_')]
 class MessageController extends AbstractController
 {
-    #[Route('/{conversationId}', name: 'index', methods: ['GET'])]
-    public function index(ManagerRegistry $doctrine, int $conversationId): JsonResponse
+    
+    #[Route('/messages/{conversationId}', name: 'get.messages', methods: ['GET'])]
+    #[ParamConverter("conversation", options:["id" => "conversationId"])]
+    public function get(SerializerInterface $serializer, Conversation $conversation): JsonResponse
     {
-        $messageRepository = $doctrine->getRepository(Message::class);
-        $messages = $messageRepository->findBy(['conversation' => $conversationId]);
-        $messagesArray = [];
-
-        foreach ($messages as $message) {
-
-            $senderArray = [];
-            $sender = $message->getSender();
-
-            $senderArray = [
-                'id' => $sender->getId(),
-                'username' => $sender->getUsername(),
-                'email' => $sender->getEmail(),
-            ];
-        
-            $messagesArray[] = [
-                'id' => $message->getId(),
-                'conversationId' => $message->getConversation()->getId(),
-                'sender' => $senderArray,
-                'text' => $message->getText(),
-                'createdAt' => $message->getCreatedAt(),
-                'updatedAt' => $message->getUpdatedAt(),
-            ];
-        }
-
-        return $this->json($messagesArray);
+       
+        $jsonConversation = $serializer->serialize($conversation->getMessages(), 'json', ["groups" => "getAllmessage"]);
+        return new JsonResponse($jsonConversation, Response::HTTP_OK,[], true);
     }
 
-    #[Route('/new', name: 'create', methods: ['POST'])]
-    public function create(ManagerRegistry $doctrine, Request $request): JsonResponse
+    #[Route('/messages', name: 'create.messages', methods: ['POST'])]
+    public function create(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $data = json_decode($request->getContent(), true);
@@ -74,6 +57,9 @@ class MessageController extends AbstractController
         $entityManager->persist($message);
         $entityManager->flush();
 
-        return $this->json(['status' => 'Message created!'], JsonResponse::HTTP_CREATED);
+        $jsonMessage = $serializer->serialize($message, 'json', ["groups" => "getAllmessage"]);
+        return new JsonResponse($jsonMessage, Response::HTTP_CREATED,[], true);
     }
+
+  
 }
