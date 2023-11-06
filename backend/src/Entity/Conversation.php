@@ -28,12 +28,9 @@ class Conversation
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class)]
-    #[Groups(["getConversation"])]
     private Collection $messages;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'conversations')]
-    #[Groups(["getConversation"])]
-
     private Collection $members;
 
     public function __construct()

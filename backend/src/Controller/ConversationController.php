@@ -14,10 +14,10 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[Route('/api/conversations', name: 'api_conversations_')]
+#[Route('/api', name: 'api_')]
 class ConversationController extends AbstractController
 {
-    #[Route('/user/{userId}', name: 'index', methods: ['GET'])]
+    #[Route('/conversations/user/{userId}', name: 'index', methods: ['GET'])]
     public function index(ConversationRepository $conversationRepository, int $userId, SerializerInterface $serializer): JsonResponse
     {
         $conversations = $conversationRepository->findConversationsByUser($userId);
@@ -29,7 +29,7 @@ class ConversationController extends AbstractController
         return new JsonResponse($jsonConversation, Response::HTTP_OK,[], true);
     }
 
-    #[Route('/new', name: 'create', methods: ['POST'])]
+    #[Route('/conversations/new', name: 'create', methods: ['POST'])]
     public function create(ManagerRegistry $doctrine, Request $request): JsonResponse
     {
         $entityManager = $doctrine->getManager();
@@ -67,7 +67,7 @@ class ConversationController extends AbstractController
     }
 
     
-    #[Route('/find/{firstUserId}/{secondUserId}', name: 'find.conversation', methods: ['GET'])]
+    #[Route('/conversations/find/{firstUserId}/{secondUserId}', name: 'find.conversation', methods: ['GET'])]
     public function findConversations(ConversationRepository $conversationRepository, SerializerInterface $serializer, int $firstUserId, int $secondUserId): JsonResponse
     {
         $conversation = $conversationRepository->findConversationBetweenUsers($firstUserId, $secondUserId);

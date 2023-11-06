@@ -7,13 +7,15 @@ use App\Repository\BookRepository;
 use App\Repository\PublicationRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
+
+
 
 #[Route('/api', name: 'api_')]
 class PublicationController extends AbstractController
@@ -22,8 +24,8 @@ class PublicationController extends AbstractController
     public function getAll(PublicationRepository $publicationRepository, SerializerInterface $serializer): JsonResponse
     {
         $publications = $publicationRepository->findAll();
-        $jsonPublications = $serializer->serialize($publications, 'json');
-        return new JsonResponse($jsonPublications, Response::HTTP_OK, ["groups" => "getPublication"], true);
+        $jsonPublications = $serializer->serialize($publications, 'json', ["groups" => "getPublication"]);
+        return new JsonResponse($jsonPublications, Response::HTTP_OK, [], true);
     }
     #[Route('/publications/{id}', name: 'publication.get', methods: ['GET'])]
     public function getPublication(SerializerInterface $serializer, Publication $publication, PublicationRepository $publicationRepository): JsonResponse

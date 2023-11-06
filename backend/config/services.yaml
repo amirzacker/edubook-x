@@ -7,7 +7,6 @@ parameters:
     STRIPE_SECRET: '%env(STRIPE_SECRET)%'
 
 services:
-    App\Serializer\CircularReferenceHandler: ~
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

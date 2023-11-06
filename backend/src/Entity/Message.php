@@ -13,19 +13,19 @@ class Message
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getAllmessage","getConversation"])]
+    #[Groups(["getAllmessage"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["getAllmessage","getConversation"])]
+    #[Groups(["getAllmessage"])]
     private ?string $text = null;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["getAllmessage","getConversation"])]
+    #[Groups(["getAllmessage"])]
     private \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(["getAllmessage","getConversation"])]
+    #[Groups(["getAllmessage"])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
@@ -35,7 +35,7 @@ class Message
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["getAllmessage","getConversation"])]
+    #[Groups(["getAllmessage"])]
     private ?User $sender = null;
 
     public function getCreatedAt(): ?\DateTimeInterface
