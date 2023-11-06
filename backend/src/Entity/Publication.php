@@ -18,10 +18,12 @@ class Publication
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getPublication"])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["getPublication"])]
     private ?Book $book = null;
 
     #[ORM\Column(length: 255)]

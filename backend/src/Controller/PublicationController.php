@@ -33,14 +33,15 @@ class PublicationController extends AbstractController
         if (!$publication) {
             return $this->json(['error' => 'Publication not found'], Response::HTTP_NOT_FOUND);
         }
-        $jsonPublication = $serializer->serialize($publication, 'json');
-        return new JsonResponse($jsonPublication, Response::HTTP_OK, ["groups" => "getPublication"], true);
+        $jsonPublication = $serializer->serialize($publication, 'json', ["groups" => "getPublication"]);
+        return new JsonResponse($jsonPublication, Response::HTTP_OK, [], true);
     }
 
     #[Route('/publications', name: 'publication.add', methods: ['POST'])]
     public function addPublication(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UserRepository $userRepository, BookRepository $bookRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        
 
         $user = $userRepository->find($data['userId']);
         $book = $bookRepository->find($data['bookId']);
@@ -59,7 +60,7 @@ class PublicationController extends AbstractController
         $entityManager->persist($publication);
         $entityManager->flush();
 
-        $jsonPublication = $serializer->serialize($publication, 'json');
+        $jsonPublication = $serializer->serialize($publication, 'json', ["groups" => "getPublication"]);
         return new JsonResponse($jsonPublication, Response::HTTP_CREATED, [], true);
     }
 
@@ -101,7 +102,7 @@ class PublicationController extends AbstractController
             return $this->json(['message' => 'No publications found for this user'], Response::HTTP_NOT_FOUND);
         }
 
-        $jsonPublications = $serializer->serialize($publications, 'json');
+        $jsonPublications = $serializer->serialize($publications, 'json', ["groups" => "getPublication"]);
         return new JsonResponse($jsonPublications, Response::HTTP_OK, [], true);
     }
 

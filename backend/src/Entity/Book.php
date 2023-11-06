@@ -21,23 +21,23 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $author = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    #[Groups(["getBook"])]
+    #[Groups(["getBook", "getPublication"])]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Publication::class)]
