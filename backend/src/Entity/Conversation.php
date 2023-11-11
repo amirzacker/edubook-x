@@ -31,6 +31,7 @@ class Conversation
     private Collection $messages;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'conversations')]
+    #[Groups(["getConversation"])]
     private Collection $members;
 
     public function __construct()
