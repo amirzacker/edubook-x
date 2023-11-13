@@ -1,0 +1,210 @@
+.publication {
+  flex: 4;
+  padding: 20px;
+}
+
+.publicationTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.publicationAddButton {
+  width: 80%;
+  border: none;
+  padding: 5px;
+  background-color: teal;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.publicationInfoImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+
+.publicationFormLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.publicationFormLeft > label {
+  margin-bottom: 10px;
+  color: gray;
+}
+
+.publicationFormLeft > input,
+.publicationFormLeft > select,
+.publicationFormLeft > textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c0c0c0;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.publicationFormTextarea {
+  resize: vertical;
+  height: 100px;
+  resize: none; 
+}
+
+.publicationFormSelect {
+  cursor: pointer;
+}
+
+.publicationFormInput:focus,
+.publicationFormSelect:focus,
+.publicationFormTextarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+
+.searchButton {
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 5px;
+  background-color: teal;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  width: 10rem;
+}
+
+.publicationButton {
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 5px;
+  background-color: teal;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 25px;
+  width: 10rem;
+}
+
+.publicationButton:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 13px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.publicationFormInput,
+.publicationFormSelect,
+.publicationFormTextarea {
+  width: 100%; /* Utilisez toute la largeur disponible */
+  padding: 10px; /* Plus de padding pour un meilleur confort visuel */
+  border: 1px solid #c0c0c0; /* Bordure plus subtile */
+  border-radius: 8px; /* Bordures arrondies pour un look moderne */
+  box-sizing: border-box; /* Assurez-vous que le padding ne modifie pas la largeur */
+}
+
+
+.publicationFormSelect {
+  cursor: pointer; /* Indique que c'est un élément interactif */
+}
+
+
+
+.publicationInfoTop {
+  display: flex;
+  align-items: center;
+}
+
+.publicationName {
+  font-weight: 600;
+}
+
+.publicationInfoBottom {
+  margin-top: 10px;
+}
+
+.publicationInfoItem {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.publicationInfoValue {
+  font-weight: 300;
+}
+
+.publicationBottom {
+  width: 70%;
+  padding: 20px;
+  margin: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+}
+
+.publicationForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.publicationUploadImg {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+  border: 1px solid #c0c0c0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.publicationFormRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.publicationUpload {
+  display: flex;
+  align-items: center;
+  margin-left: 13px;
+}
+
