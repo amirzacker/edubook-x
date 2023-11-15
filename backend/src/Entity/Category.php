@@ -14,11 +14,11 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getBook", "getPublication"])]
+    #[Groups(["getBook", "getPublication", "getCategory"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["getPublication"])]
+    #[Groups(["getPublication", "getCategory"])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Book::class)]

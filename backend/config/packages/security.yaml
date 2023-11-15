@@ -34,6 +34,8 @@ security:
         - { path: ^/api/register, roles: PUBLIC_ACCESS  }
         - { path: ^/api/login, roles: PUBLIC_ACCESS  }
         - { path: ^/api/publications, roles: PUBLIC_ACCESS  }
+        - { path: ^/api/categories, roles: PUBLIC_ACCESS  }
+        - { path: ^/api/books, roles: PUBLIC_ACCESS  }
         - { path: ^/api/conversations, roles: PUBLIC_ACCESS  }
         - { path: ^/api/messages, roles: PUBLIC_ACCESS  }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

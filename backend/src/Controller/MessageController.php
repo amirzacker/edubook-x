@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
+
 #[Route('/api', name: 'api_')]
 class MessageController extends AbstractController
 {

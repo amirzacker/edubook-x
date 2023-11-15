@@ -58,8 +58,8 @@ class BookController extends AbstractController
         $bookData = json_decode($request->getContent(), true);
 
         // Check if category ID is provided
-        if (isset($bookData['category'])) {
-            $category = $categoryRepository->find($bookData['category']);
+        if (isset($bookData['categoryId'])) {
+            $category = $categoryRepository->find($bookData['categoryId']);
             if (!$category) {
                 return $this->json(['error' => 'Category not found'], Response::HTTP_BAD_REQUEST);
             }

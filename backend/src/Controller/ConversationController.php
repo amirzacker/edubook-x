@@ -14,7 +14,7 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[Route('/api/conversations', name: 'api_conversations_')]
+#[Route('/api/conversations', name: 'api_conversations')]
 class ConversationController extends AbstractController
 {
     #[Route('/user/{userId}', name: 'index', methods: ['GET'])]
