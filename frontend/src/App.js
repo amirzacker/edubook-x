@@ -21,7 +21,7 @@ import NewPublication from "./components/publication/NewPublication";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+  
   return (
     <Router>
       <Routes>
@@ -34,12 +34,14 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         {/* Les routes avec AppLayout */}
+
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="/dashboard/messenger" element={<Messenger />} />
           <Route path="/dashboard/publications" element={<PublicationList />} />
           <Route path="/dashboard/publications/:publicationId" element={<Publication />} />
           <Route path="/dashboard/publications/new" element={<NewPublication />} />
         </Route>
+
       </Routes>
     </Router>
   );

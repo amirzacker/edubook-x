@@ -11,16 +11,16 @@ const MainLayout = styled.div`
 const Content = styled.div`
   flex-grow: 1;
   transition: padding-left 0.3s ease;
-  padding-left: ${(props) => (props.sidebarOpen ? "250px" : "70px")};
+  padding-left: ${(props) => (props.$sidebaropen ? "250px" : "70px")};
 `;
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebaropen, setSidebarOpen] = useState(false);
 
   return (
     <MainLayout>
-      <MySideNav sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Content sidebarOpen={sidebarOpen}>
+      <MySideNav sidebaropen={sidebaropen} setSidebarOpen={setSidebarOpen} />
+      <Content $sidebaropen={sidebaropen}>
         <Outlet />
       </Content>
     </MainLayout>

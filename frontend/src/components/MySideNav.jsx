@@ -8,7 +8,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./MySideNav.css";
 import { useNavigate } from "react-router-dom";
 
-const MySideNav = ({ setSidebarOpen, sidebarOpen }) => {
+const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
   const navigate = useNavigate();
 
   const handleToggle = (expanded) => {
@@ -24,7 +24,7 @@ const MySideNav = ({ setSidebarOpen, sidebarOpen }) => {
       onToggle={handleToggle}
       onSelect={handleSelect}
       className="mysidenav"
-      expanded={sidebarOpen}
+      expanded={sidebaropen}
     >
       <SideNav.Toggle />
       <SideNav.Nav defaultSelected="home">

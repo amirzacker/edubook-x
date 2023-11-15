@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 const ConversationContainer = styled.div`
@@ -8,8 +7,8 @@ const ConversationContainer = styled.div`
   padding: 10px;
   cursor: pointer;
   margin-top: 20px;
-  border-radius: ${(props) => (props.isActive ? "15px 50px 50px 15px" : "15px")};
-  background-color: ${(props) => (props.isActive ? "#0056b3" : "#0d6efd")};
+  border-radius: ${(props) => (props.$isActive ? "15px 50px 50px 15px" : "15px")};
+  background-color: ${(props) => (props.$isActive ? "#0056b3" : "#0d6efd")};
   position: relative;
 
   &:hover {
@@ -19,7 +18,7 @@ const ConversationContainer = styled.div`
   &::after {
     content: '';
     position: absolute;
-    ${(props) => props.isActive && `
+    ${(props) => props.$isActive && `
       right: -10px;
       top: 50%;
       border-width: 10px;
@@ -48,17 +47,13 @@ const ConversationName = styled.span`
 
 const Conversation = ({ conversation, currentUser, isActive }) => {
   const [user, setUser] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const friendId = conversation.members.find((m) => m !== currentUser.id);
-  console.log(friendId);
 
   useEffect(() => {
     setUser(conversation.members.find((m) => m !== currentUser.id));
   }, [currentUser, conversation]);
 
   return (
-    <ConversationContainer isActive={isActive}>
+    <ConversationContainer $isActive={isActive}>
       <ConversationImg
         src={"/img/avatar1.png" ?? "/img/avatar2.jpg"}
         alt="avatar-user"

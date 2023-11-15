@@ -2,6 +2,22 @@
   flex: 4;
   padding: 20px;
 }
+.publicationTop {
+  width: 74%;
+}
+.publicationFormInput.error,
+.publicationFormSelect.error {
+  border: 1px solid red;
+}
+.publicationFormSelect {
+  background-color: #f0f0f0; /* Couleur de fond */
+  color: #333; /* Couleur du texte */
+  /* Autres styles... */
+}
+
+.publicationFormSelect:hover {
+  background-color: #e0e0e0; /* Changement de couleur au survol */
+}
 
 .publicationTitleContainer {
   display: flex;
@@ -28,7 +44,6 @@
   margin-right: 20px;
 }
 
-
 .publicationFormLeft {
   display: flex;
   flex-direction: column;
@@ -37,6 +52,25 @@
 .publicationFormLeft > label {
   margin-bottom: 10px;
   color: gray;
+}
+.error-message {
+  margin: 10px 25px;
+  color: red;
+}
+
+.searchResultsIndicator {
+  margin-left: 35px;
+  color: green;
+}
+.text-success {
+  display: flex;
+}
+.text-success > label {
+  margin-left: 20px;
+}
+
+.searchButton:disabled {
+  cursor: not-allowed; /* Change le curseur pour indiquer qu'il est désactivé */
 }
 
 .publicationFormLeft > input,
@@ -52,7 +86,7 @@
 .publicationFormTextarea {
   resize: vertical;
   height: 100px;
-  resize: none; 
+  resize: none;
 }
 
 .publicationFormSelect {
@@ -66,7 +100,6 @@
   outline: none;
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
-
 
 .searchButton {
   border: none;
@@ -93,6 +126,8 @@
   cursor: pointer;
   margin-top: 25px;
   width: 10rem;
+  display: flex;
+  justify-content: center;
 }
 
 .publicationButton:hover {
@@ -141,12 +176,9 @@
   box-sizing: border-box; /* Assurez-vous que le padding ne modifie pas la largeur */
 }
 
-
 .publicationFormSelect {
   cursor: pointer; /* Indique que c'est un élément interactif */
 }
-
-
 
 .publicationInfoTop {
   display: flex;
@@ -174,7 +206,6 @@
 .publicationBottom {
   width: 70%;
   padding: 20px;
-  margin: 20px;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
 }
@@ -185,7 +216,6 @@
   justify-content: center;
 }
 
-
 .publicationUploadImg {
   width: 100px;
   height: 100px;
@@ -193,7 +223,7 @@
   object-fit: cover;
   margin-right: 20px;
   border: 1px solid #c0c0c0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .publicationFormRight {
@@ -207,4 +237,3 @@
   align-items: center;
   margin-left: 13px;
 }
-
