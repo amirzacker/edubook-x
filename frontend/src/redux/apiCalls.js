@@ -50,6 +50,7 @@ export const updatePublication = async (id, publication, dispatch) => {
   dispatch(updatePublicationStart());
   try {
     // update
+    await userRequest.put(`/publications/${id}`, publication);
     dispatch(updatePublicationSuccess({ id, publication }));
   } catch (err) {
     dispatch(updatePublicationFailure());

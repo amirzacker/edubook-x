@@ -68,7 +68,7 @@ const PublicationList = () => {
       <div className="publicationTitleContainer">
         <h1 className="publicationTitle">Mes Annonces</h1>
         <Link to="/dashboard/publications/new">
-          <button className="publicationAddButton">Nouvelle</button>
+          <button className="publicationAddButton">Nouvelle annonce</button>
         </Link>
       </div>
       <div className="publicationList">

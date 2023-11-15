@@ -8,9 +8,8 @@ import { userRequest } from "../../requestMethods";
 const Publication = () => {
   const location = useLocation();
   const publicationId = location.pathname.split("/")[3];
-  const [pStats, setPStats] = useState([]);
 
-  console.log(publicationId);
+
 
   const publication = useSelector((state) =>
     state.publication.publications.find(
@@ -18,43 +17,7 @@ const Publication = () => {
     )
   );
 
-  const MONTHS = useMemo(
-    () => [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    []
-  );
-
-  useEffect(() => {
-    const getStats = async () => {
-      try {
-        const res = await userRequest.get("orders/income?pid=" + publicationId);
-        const list = res.data.sort((a, b) => {
-          return a._id - b._id;
-        });
-        list.map((item) =>
-          setPStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], Sales: item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStats();
-  }, [publicationId, MONTHS]);
+ 
 
   return (
     <div className="publication">

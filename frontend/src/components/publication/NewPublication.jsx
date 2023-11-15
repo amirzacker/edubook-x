@@ -16,7 +16,7 @@ const NewPublication = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
 
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [bookState, setBookState] = useState("");
   const [publicationType, setPublicationType] = useState("");
   const [comment, setComment] = useState("");
@@ -131,7 +131,7 @@ const NewPublication = () => {
     <div className="publication">
       <div className="publicationTitleContainer">
         <h1 className="publicationTitle">Créer votre annonce</h1>
-        <Link to="/newpublication">
+        <Link to="/dashboard/publications">
           <button className="publicationAddButton">Mes annonces</button>
         </Link>
       </div>

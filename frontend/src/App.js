@@ -18,10 +18,11 @@ import { Public } from "@material-ui/icons";
 import PublicationList from "./pages/publicationList/PublicationList";
 import Publication from "./components/publication/Publication";
 import NewPublication from "./components/publication/NewPublication";
+import EditPublication from "./components/publication/EditPublication";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  
+
   return (
     <Router>
       <Routes>
@@ -38,7 +39,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="/dashboard/messenger" element={<Messenger />} />
           <Route path="/dashboard/publications" element={<PublicationList />} />
-          <Route path="/dashboard/publications/:publicationId" element={<Publication />} />
+          <Route path="/dashboard/publications/:publicationId" element={<EditPublication />} />
           <Route path="/dashboard/publications/new" element={<NewPublication />} />
         </Route>
 

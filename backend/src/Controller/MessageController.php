@@ -53,7 +53,6 @@ class MessageController extends AbstractController
         $message->setText($data['text']);
         $message->setConversation($conversation);
         $message->setSender($sender);
-        $message->setUpdatedAtValue();
         $message->setCreatedAtValue();
         $entityManager->persist($message);
         $entityManager->flush();
