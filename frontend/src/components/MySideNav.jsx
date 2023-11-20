@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
@@ -7,9 +7,13 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./MySideNav.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/apiCalls";
 
 const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleToggle = (expanded) => {
     setSidebarOpen(expanded);
@@ -17,8 +21,24 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
 
   const handleSelect = (eventKey) => {
     setSidebarOpen(false);
+    if (eventKey==='logout') {
+      handleLogout();
+      return;
+    }
     navigate("/dashboard/" + eventKey);
   };
+
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate("/login"); // Rediriger vers la page de connexion après la déconnexion
+  };
+
+
+  useEffect(() => {
+    if (sidebaropen) {
+      navigate("/dashboard/publications");
+    }
+  }, [navigate, sidebaropen]);
   return (
     <SideNav
       onToggle={handleToggle}
@@ -27,7 +47,7 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
       expanded={sidebaropen}
     >
       <SideNav.Toggle />
-      <SideNav.Nav defaultSelected="home">
+      <SideNav.Nav defaultSelected="publications">
         <NavItem eventKey="messenger">
           <NavIcon>
             <MailOutlineIcon />
@@ -46,7 +66,7 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
           </NavIcon>
           <NavText>Profil</NavText>
         </NavItem>
-        <NavItem eventKey="logout">
+        <NavItem  eventKey="logout">
           <NavIcon>
             <ExitToAppIcon />
           </NavIcon>

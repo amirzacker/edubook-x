@@ -77,6 +77,11 @@ const EditPublication = () => {
     }
   };
 
+
+  const handleBack = () => {
+    navigate(-1); // Cela ramènera l'utilisateur à la page précédente
+  };
+
   return (
     <div className="publication">
       <div className="publicationTitleContainer">
@@ -85,6 +90,9 @@ const EditPublication = () => {
           <button className="publicationAddButton">Mes annonces</button>
         </Link>
       </div>
+      <Link onClick={()=>  navigate(-1)}>
+        <button className="publicationBackButton">Retour</button>
+      </Link>
 
       <div className="publicationBottom">
         <form className="publicationForm" id="editform" onSubmit={handleSubmit}>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import MySideNav from "./MySideNav";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
+
 
 const MainLayout = styled.div`
   display: flex;
@@ -17,13 +18,22 @@ const Content = styled.div`
 const Dashboard = () => {
   const [sidebaropen, setSidebarOpen] = useState(false);
 
+  const location = useLocation();
+
+  // Redirection si l'utilisateur accède directement à '/dashboard' ou '/dashboard/'
+  if (location.pathname === "/dashboard" || location.pathname === "/dashboard/") {
+    return <Navigate to="/dashboard/publications" replace />;
+  }
+
   return (
+    <>
     <MainLayout>
       <MySideNav sidebaropen={sidebaropen} setSidebarOpen={setSidebarOpen} />
       <Content $sidebaropen={sidebaropen}>
         <Outlet />
       </Content>
     </MainLayout>
+    </>
   );
 };
 

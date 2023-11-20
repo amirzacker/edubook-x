@@ -135,6 +135,7 @@ const NewPublication = () => {
           <button className="publicationAddButton">Mes annonces</button>
         </Link>
       </div>
+      
       <div className="publicationTop">
         <div className="publicationTopRight">
           <form className="publicationForm" onSubmit={handleSearch}>
@@ -198,6 +199,13 @@ const NewPublication = () => {
                 type="text"
                 placeholder="Titre du Livre"
                 value={selectedBook?.title}
+                onChange={(e) => {
+                  const updatedBook = {
+                    ...selectedBook,
+                    title: e.target.value,
+                  };
+                  setSelectedBook(updatedBook);
+                }}
               />
               <input
                 className={`publicationFormInput ${
@@ -211,6 +219,15 @@ const NewPublication = () => {
                 value={
                   selectedBook?.authors ? selectedBook?.authors?.join(", ") : ""
                 }
+                onChange={(e) => {
+                  const updatedBook = {
+                    ...selectedBook,
+                    authors: e.target.value
+                      .split(", ")
+                      .filter((author) => author.trim() !== ""), // Crée un tableau en divisant la chaîne par ", "
+                  };
+                  setSelectedBook(updatedBook);
+                }}
               />
             </div>
 
@@ -230,6 +247,15 @@ const NewPublication = () => {
                     ? selectedBook?.categories.join(", ")
                     : "catégorie Non spécifiée"
                 }
+                onChange={(e) => {
+                  const updatedBook = {
+                    ...selectedBook,
+                    categories: e.target.value
+                      .split(", ")
+                      .filter((category) => category.trim() !== ""), // Crée un tableau en divisant la chaîne par ", "
+                  };
+                  setSelectedBook(updatedBook);
+                }}
               />
               <select
                 name="PublicationType"
@@ -276,6 +302,13 @@ const NewPublication = () => {
                 className="publicationFormTextarea"
                 value={selectedBook?.description}
                 placeholder="Description du livre..."
+                onChange={(e) => {
+                  const updatedBook = {
+                    ...selectedBook,
+                    description: e.target.value,
+                  };
+                  setSelectedBook(updatedBook);
+                }}
               ></textarea>
               <textarea
                 className="publicationFormTextarea"
@@ -298,7 +331,24 @@ const NewPublication = () => {
               <label htmlFor="file">
                 <Publish />
               </label>
-              <input type="file" id="file" style={{ display: "none" }} />
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+                    const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour l'image
+                
+                    const updatedBook = {
+                      ...selectedBook,
+                      imageLinks: { ...selectedBook.imageLinks, thumbnail: imageUrl }, // Met à jour l'image
+                    };
+                    setSelectedBook(updatedBook);
+                  }
+                }}
+                
+              />
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>
               )}

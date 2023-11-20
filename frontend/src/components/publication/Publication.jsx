@@ -27,7 +27,6 @@ const Publication = () => {
         <button className="publicationAddButton">Create</button>
       </Link>
     </div>
-
     <div className="publicationBottom">
       <form className="publicationForm">
         <div className="publicationFormLeft">

@@ -19,29 +19,46 @@ import PublicationList from "./pages/publicationList/PublicationList";
 import Publication from "./components/publication/Publication";
 import NewPublication from "./components/publication/NewPublication";
 import EditPublication from "./components/publication/EditPublication";
+import Profile from "./pages/Profile";
+import Publications from "./pages/publicationList/Publications";
+
+
+const PrivateRoute = ({ children }) => {
+  const user = useSelector((state) => state.user.currentUser);
+  return user ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const user = useSelector((state) => state.user.currentUser);
+  return user ? <Navigate to="/dashboard" /> : children;
+};
+
 
 function App() {
-  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <Router>
       <Routes>
-        {/* Les routes sans AppLayout */}
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/" element={user ? <Navigate to="/" replace /> : <Login />} /> */}
+      {/* Les routes sans AppLayout */}
+      <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/success" element={<Success />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
 
         {/* Les routes avec AppLayout */}
 
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
           <Route path="/dashboard/messenger" element={<Messenger />} />
-          <Route path="/dashboard/publications" element={<PublicationList />} />
+          {/* <Route path="/dashboard/publications" element={<PublicationList />} /> */}
+          <Route path="/dashboard/publications" element={<Publications />} />
           <Route path="/dashboard/publications/:publicationId" element={<EditPublication />} />
           <Route path="/dashboard/publications/new" element={<NewPublication />} />
+          <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="*" element={<Navigate to="/dashboard/publications" replace />} />
         </Route>
+
+        <Route path="*" element={<Register />} />
 
       </Routes>
     </Router>

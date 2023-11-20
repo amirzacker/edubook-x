@@ -76,7 +76,7 @@ class PublicationController extends AbstractController
         $updatedPublication = $serializer->deserialize($request->getContent(), Publication::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $publication]);
         $entityManager->flush();
 
-        $jsonPublication = $serializer->serialize($updatedPublication, 'json', ["groups" => "getPublication"]);
+        $jsonPublication = $serializer->serialize($updatedPublication, 'json',);
         return new JsonResponse($jsonPublication, Response::HTTP_OK, [], true);
     }
 

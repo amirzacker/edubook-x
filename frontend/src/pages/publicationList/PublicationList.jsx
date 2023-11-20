@@ -20,10 +20,10 @@ const PublicationList = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 1 },
+    { field: "id", headerName: "ID", flex: 0 },
     {
-      field: "comment",
-      headerName: "Commentaire",
+      field: "image",
+      headerName: "Couverture",
       flex: 1,
       renderCell: (params) => (
         <div className="publicationListItem">
@@ -33,8 +33,15 @@ const PublicationList = () => {
             src={params.row.book.image}
             alt=""
           />
-          {params.row.comment}
         </div>
+      ),
+    },
+    {
+      field: "comment",
+      headerName: "Commentaire",
+      flex: 1,
+      renderCell: (params) => (
+        <div className="publicationListItem">{params.row.comment}</div>
       ),
     },
     { field: "book_state", headerName: "État du Livre", flex: 1 },

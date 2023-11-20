@@ -27,7 +27,7 @@
 #editform label {
 margin: 10px 0 0 0 ;
 }
-.publicationAddButton {
+.publicationAddButton, .publicationBackButton {
   width: auto;
   border: none;
   padding: 10px 20px; 
@@ -39,6 +39,11 @@ margin: 10px 0 0 0 ;
   cursor: pointer;
   white-space: nowrap; /* Empêche le texte de passer à la ligne */
   overflow: hidden; /* Cache le débordement de texte */
+}
+
+.publicationBackButton{
+  background-color: red;
+  margin-bottom: 6px;
 }
 
 .publicationInfoImg {
@@ -241,5 +246,5 @@ margin: 10px 0 0 0 ;
   display: flex;
   align-items: center;
   margin-left: 13px;
-  margin-top: 12px;
+  margin-top: 6px;
 }

@@ -1,7 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
@@ -177,7 +176,7 @@ const Cart = () => {
         });
         navigate("/success", {
           stripeData: res.data,
-          products: cart, });
+          publications: cart, });
       } catch {}
     };
     stripeToken && makeRequest();
@@ -185,7 +184,6 @@ const Cart = () => {
   return (
     <Container>
       {/* <Navbar /> */}
-      <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
@@ -198,31 +196,31 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map((product) => (
+            {cart?.publications?.map((publication) => (
               <Product>
                 <ProductDetail>
-                  <Image src={product.img} />
+                  <Image src={publication.book.image} />
                   <Details>
                     <ProductName>
-                      <b>Product:</b> {product.title}
+                      <b>Product:</b> {publication.title}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b> {product._id}
+                      <b>ID:</b> {publication._id}
                     </ProductId>
-                    <ProductColor color={product.color} />
+                    <ProductColor color={publication.color} />
                     <ProductSize>
-                      <b>Size:</b> {product.size}
+                      <b>Size:</b> {publication.size}
                     </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
                     <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <ProductAmount>{publication.quantity}</ProductAmount>
                     <Remove />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    $ {product.price * product.quantity}
+                    $ {publication.price * publication.quantity}
                   </ProductPrice>
                 </PriceDetail>
               </Product>

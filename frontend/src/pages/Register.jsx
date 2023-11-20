@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register, login } from "../redux/apiCalls";
+
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -8,8 +13,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
+    center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -55,23 +59,66 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userInfo.password !== userInfo.confirmPassword) {
+      setErrorMessage("Les mots de passe ne correspondent pas.");
+      return;
+    }
+    const user = {
+      // Adapt this object according to your backend requirements
+      name: userInfo.name,
+      lastName: userInfo.lastName,
+      username: userInfo.username,
+      email: userInfo.email,
+      password: userInfo.password,
+    };
+
+    try {
+      await register(dispatch, userInfo);
+      login(dispatch, { username: userInfo.email, password: userInfo.password }, () => {
+        navigate("/dashboard");
+      });
+    } catch (error) {
+      setErrorMessage("Erreur lors de l'inscription.");
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+        <Link href="/login">Do You a account LOGIN</Link>
+        <Form onSubmit={handleSubmit}>
+          <Input name="name" placeholder="Prénom" onChange={handleInputChange}/>
+          <Input name="lastName" placeholder="Nom de famille" onChange={handleInputChange} />
+          <Input name="username" placeholder="Nom d'utilisateur" onChange={handleInputChange} />
+          <Input name="email" placeholder="Email" onChange={handleInputChange}/>
+          <Input name="password" type="password" placeholder="Mot de passe" onChange={handleInputChange} />
+          <Input name="confirmPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleInputChange} />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button type="submit">CREATE</Button>
         </Form>
+        {errorMessage && <p style={{color: "red"}}> {errorMessage}</p>}
       </Wrapper>
     </Container>
   );
