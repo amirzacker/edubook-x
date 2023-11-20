@@ -23,7 +23,7 @@ function App() {
 						<Route path="/livres" element={<Livres books={booksData} />} />
 						<Route path="/contact" element={<Contact />} />
 					</Routes>
-					<Footer />
+						<Footer />
 				</header>
 			</div>
 		</Router>

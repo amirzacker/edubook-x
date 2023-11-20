@@ -8,6 +8,7 @@ const booksData = [
   { title: "Atlas", price: 10, image: livre1 },
   { title: "Le Petit Prince", price: 12.99, image: livre1 },
   { title: "Le Petit Prince", price: 12.99, image: livre1 },
+  { title: "Le Petit Prince", price: 12.99, image: livre1 },
 ];
 
 export default booksData;

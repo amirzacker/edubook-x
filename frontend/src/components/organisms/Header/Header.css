@@ -5,10 +5,8 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  position: fixed;
   top: 0;
   z-index: 1000; /* Assurez-vous que le z-index est plus élevé que le reste du contenu */
-
 }
 
 .logo-container {
