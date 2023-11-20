@@ -19,7 +19,6 @@ function App() {
 					<Header />
 					<Routes>
 						<Route path="/" element={<Home books={booksData} />} />
-						<Route path="/a-propos" element={<APropos />} />
 						<Route path="/livres" element={<Livres books={booksData} />} />
 						<Route path="/contact" element={<Contact />} />
 					</Routes>
