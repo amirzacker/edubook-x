@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CardBook } from '../../components/atoms';
 import './Home.css'; 
 
-const Livres = ({ books }) => {
+const Home = ({ books }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredBooks = books.filter(book =>
@@ -15,7 +15,7 @@ const Livres = ({ books }) => {
     <div>
 
 <div className="about-container">
-      <h1>EduBookX ?</h1>
+      <h1>EduBookX</h1>
       <p>
         Bienvenue sur notre plateforme dédiée à la communauté étudiante! Notre objectif principal est de vous offrir une expérience enrichissante dans le monde des livres d'occasion. Nous avons développé ce site avec l'intention de fournir une plateforme conviviale où les étudiants universitaires et scolaires peuvent acheter, vendre, échanger et même donner des livres d'occasion.
       </p>
@@ -43,4 +43,4 @@ const Livres = ({ books }) => {
   );
 }
 
-export default Livres;
+export default Home;

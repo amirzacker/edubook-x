@@ -1,7 +1,5 @@
-
-
 .about-container {
-    max-width: 800px;
+    max-width: 80%;
     margin: 0 auto;
     padding: 20px;
   }
@@ -12,26 +10,21 @@
   
   p {
     font-size: 16px;
-    line-height: 1.6;
     color: white;
-    margin-bottom: 15px;
   }
 
 .search-bar {
-    margin-top: 3%;
+    margin-top: 1%;
   }
   
   .search-bar input {
     width: 50%;
-    padding: 8px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
   }
   
 
   .card-library {
     display: flex;
     padding: 1%; /* Espacement autour de la bibliothèque de cartes */
-    margin-top: 3%;
+    margin: 0 auto;
   }

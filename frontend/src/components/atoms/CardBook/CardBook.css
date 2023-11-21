@@ -1,15 +1,16 @@
-
-
 .card {
   background-color: white; /* Couleur de fond des cartes */
   padding: 16px; /* Espacement interne des cartes */
   border-radius: 8px; /* Arrondi les coins de la carte */
-  width: 200px; /* Taille fixe pour les cartes */
-
+  width: 280px; /* Taille fixe pour les cartes */
 }
 
 /* Pseudo-élément pour créer un effet de survol */
 .card:hover {
   transform: scale(1.05);
   transition: transform 0.2s;
+}
+
+.add-card-button {
+  margin: 0 auto;
 }

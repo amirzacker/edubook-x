@@ -25,11 +25,15 @@ const CardBook = ({ title, price, image }) => {
               Prix : {price} €
             </Typography>
           </CardContent>
+          
           <CardActions>
+          <div className="add-card-button">
             <Button variant="contained" color="primary">
               Ajouter au panier
             </Button>
+            </div>
           </CardActions>
+         
         </Card>
       </div>
     </div>
