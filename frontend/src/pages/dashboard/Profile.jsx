@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { updateUser } from "../redux/apiCalls";
+import { updateUser } from "../../redux/apiCalls";
 
 const Container = styled.div`
   display: flex;
@@ -104,21 +104,21 @@ const Profile = () => {
       <Wrapper>
         <Title>Mon Profil</Title>
         <Form onSubmit={handleSubmit}>
-            <ProfileImage src={'/img/avatar1.png' } alt="Profile Image" />
+          <ProfileImage src={"/img/avatar1.png"} alt="Profile Image" />
 
           <Input
             type="file"
             onChange={handleImageChange}
             style={{ margin: "10px 0" }}
           />
-           <StyledLabel htmlFor="email">Email</StyledLabel>
+          <StyledLabel htmlFor="email">Email</StyledLabel>
           <Input
             name="email"
             placeholder="Email"
             value={userInfo.email}
             onChange={handleInputChange}
           />
-           <StyledLabel htmlFor="username">Nom d'utisateur</StyledLabel>
+          <StyledLabel htmlFor="username">Nom d'utisateur</StyledLabel>
           <Input
             name="username"
             placeholder="Nom d'utilisateur"

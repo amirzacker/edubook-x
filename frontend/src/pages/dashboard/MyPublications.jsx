@@ -1,11 +1,11 @@
-import "./publicationList.css";
+import "./MyPublications.css";
 
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePublication, getPublications } from "../../redux/apiCalls";
-import Pagination from "@material-ui/lab/Pagination"; // Assurez-vous d'avoir installé @material-ui/lab
+import Pagination from "@material-ui/lab/Pagination"; 
 import styled from "styled-components";
 
 const PaginationContainer = styled.div`

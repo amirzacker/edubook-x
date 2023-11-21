@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
-import Product from "./Product";
+import Publication from "./Publication"; 
 import axios from "axios";
 
 const Container = styled.div`
@@ -11,47 +10,46 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Products = ({ cat, filters, sort }) => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const Publications = ({ cat, filters, sort }) => {
+  const [publications, setPublications] = useState([]); 
+  const [filteredPublications, setFilteredPublications] = useState([]); 
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getPublications = async () => { 
       try {
         const res = await axios.get(
           cat
             ? `http://localhost:8000/api/publications?category=${cat}`
             : "http://localhost:8000/api/publications"
         );
-        setProducts(res.data);
-        console.log(res);
+        setPublications(res.data); 
       } catch (err) {}
     };
-    getProducts();
+    getPublications();
   }, [cat]);
 
   useEffect(() => {
     cat &&
-      setFilteredProducts(
-        products.filter((item) =>
+      setFilteredPublications(
+        publications.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
             item[key].includes(value)
           )
         )
       );
-  }, [products, cat, filters]);
+  }, [publications, cat, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
-      setFilteredProducts((prev) =>
+      setFilteredPublications((prev) =>
         [...prev].sort((a, b) => a.createdAt - b.createdAt)
       );
     } else if (sort === "asc") {
-      setFilteredProducts((prev) =>
+      setFilteredPublications((prev) =>
         [...prev].sort((a, b) => a.price - b.price)
       );
     } else {
-      setFilteredProducts((prev) =>
+      setFilteredPublications((prev) =>
         [...prev].sort((a, b) => b.price - a.price)
       );
     }
@@ -60,12 +58,12 @@ const Products = ({ cat, filters, sort }) => {
   return (
     <Container>
       {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-        : products
+        ? filteredPublications.map((item) => <Publication item={item} key={item.id} />)
+        : publications
             .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
+            .map((item) => <Publication item={item} key={item.id} />)}
     </Container>
   );
 };
 
-export default Products;
+export default Publications;

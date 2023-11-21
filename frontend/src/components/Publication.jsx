@@ -1,9 +1,10 @@
 import {
-  FavoriteBorderOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import MailIcon from '@material-ui/icons/Mail';
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Info = styled.div`
@@ -67,26 +68,31 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ item }) => {
+const Publication = ({ item }) => {
+  const navigate = useNavigate();
+
+  const PublicationDetail = () => {
+    navigate(`/publications/${item.id}`);
+  };
   return (
-    <Container>
+    <Container onClick={PublicationDetail}>
       <Circle />
-      <Image src={item.img} />
+      <Image src={item.book?.image} />
       <Info>
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <Link to={`/product/${item._id}`}>
-          <SearchOutlined />
+          <Link to={`/publications/${item.id}`}>
+            <VisibilityIcon />
           </Link>
         </Icon>
         <Icon>
-          <FavoriteBorderOutlined />
+          <MailIcon />
         </Icon>
       </Info>
     </Container>
   );
 };
 
-export default Product;
+export default Publication;

@@ -160,6 +160,7 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
 
@@ -205,7 +206,7 @@ const Cart = () => {
                       <b>Product:</b> {publication.title}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b> {publication._id}
+                      <b>ID:</b> {publication.id}
                     </ProductId>
                     <ProductColor color={publication.color} />
                     <ProductSize>
