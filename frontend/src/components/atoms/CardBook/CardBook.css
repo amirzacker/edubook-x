@@ -1,8 +1,4 @@
-.card-library {
-  display: flex;
-  padding: 1%; /* Espacement autour de la bibliothèque de cartes */
-  margin-top: 3%;
-}
+
 
 .card {
   background-color: white; /* Couleur de fond des cartes */

@@ -7,8 +7,6 @@ import { Header, Footer } from "./components/organisms";
 import { CardBook } from "./components/atoms";
 import booksData from './booksData';
 import Home from './pages/Home/Home';
-import APropos from './pages/APropos/APropos';
-import Livres from './pages/Livres/Livres';
 import Contact from './pages/Contact/Contact';
 
 function App() {
@@ -18,8 +16,7 @@ function App() {
 				<header className="App-header">
 					<Header />
 					<Routes>
-						<Route path="/" element={<Home books={booksData} />} />
-						<Route path="/livres" element={<Livres books={booksData} />} />
+						<Route path="/livres" element={<Home books={booksData} />} />
 						<Route path="/contact" element={<Contact />} />
 					</Routes>
 						<Footer />
