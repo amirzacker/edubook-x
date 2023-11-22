@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../toolkit/responsive";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register, login } from "../redux/apiCalls";
@@ -92,9 +92,13 @@ const Register = () => {
 
     try {
       await register(dispatch, userInfo);
-      login(dispatch, { username: userInfo.email, password: userInfo.password }, () => {
-        navigate("/dashboard");
-      });
+      login(
+        dispatch,
+        { username: userInfo.email, password: userInfo.password },
+        () => {
+          navigate("/dashboard");
+        }
+      );
     } catch (error) {
       setErrorMessage("Erreur lors de l'inscription.");
     }
@@ -106,19 +110,45 @@ const Register = () => {
         <Title>CREATE AN ACCOUNT</Title>
         <Link href="/login">Do You a account LOGIN</Link>
         <Form onSubmit={handleSubmit}>
-          <Input name="name" placeholder="Prénom" onChange={handleInputChange}/>
-          <Input name="lastName" placeholder="Nom de famille" onChange={handleInputChange} />
-          <Input name="username" placeholder="Nom d'utilisateur" onChange={handleInputChange} />
-          <Input name="email" placeholder="Email" onChange={handleInputChange}/>
-          <Input name="password" type="password" placeholder="Mot de passe" onChange={handleInputChange} />
-          <Input name="confirmPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleInputChange} />
+          <Input
+            name="name"
+            placeholder="Prénom"
+            onChange={handleInputChange}
+          />
+          <Input
+            name="lastName"
+            placeholder="Nom de famille"
+            onChange={handleInputChange}
+          />
+          <Input
+            name="username"
+            placeholder="Nom d'utilisateur"
+            onChange={handleInputChange}
+          />
+          <Input
+            name="email"
+            placeholder="Email"
+            onChange={handleInputChange}
+          />
+          <Input
+            name="password"
+            type="password"
+            placeholder="Mot de passe"
+            onChange={handleInputChange}
+          />
+          <Input
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirmer le mot de passe"
+            onChange={handleInputChange}
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
           <Button type="submit">CREATE</Button>
         </Form>
-        {errorMessage && <p style={{color: "red"}}> {errorMessage}</p>}
+        {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
       </Wrapper>
     </Container>
   );

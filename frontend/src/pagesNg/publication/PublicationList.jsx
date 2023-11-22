@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
-import Publications from "../../components/Publications";
-import Footer from "../../components/Footer";
-import { mobile } from "../../responsive";
+import Navbar from "../../componentsNg/Navbar";
+import Publications from "../../componentsNg/Publications";
+import Footer from "../../componentsNg/Footer";
+import { mobile } from "../../toolkit/responsive";
 import { useLocation } from "react-router";
 import { useState } from "react";
 

@@ -1,11 +1,10 @@
 import "./messenger.css";
-import Conversation from "../../components/Conversation";
-import Message from "../../components/Message";
+import Conversation from "../../componentsNg/Conversation";
+import Message from "../../componentsNg/Message";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
+import { userRequest } from "../../toolkit/requestMethods";
 
 const Messenger = () => {
   const [conversations, setConversations] = useState([]);
@@ -16,17 +15,11 @@ const Messenger = () => {
   const scrollRef = useRef();
   const [activeConversation, setActiveConversation] = useState(null);
 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  console.log(user);
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:8000/api/conversations/user/" + user?.user?.id,
-          {
-            //headers: { "x-access-token": user.token },
-          }
+        const res = await userRequest.get(
+          "conversations/user/" + user?.user?.id
         );
         setConversations(res.data);
       } catch (err) {
@@ -36,23 +29,19 @@ const Messenger = () => {
     getConversations();
   }, [user]);
 
-  console.log(messages);
   useEffect(() => {
     const getMessages = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:8000/api/messages/" + currentChat?.id,
-          {
-            //headers: { "x-access-token": user.token },
-          }
-        );
-        setMessages(res.data);
-      } catch (err) {
-        console.log(err);
+      if (currentChat && currentChat.id) {
+        try {
+          const res = await userRequest.get("messages/" + currentChat.id);
+          setMessages(res.data);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
     getMessages();
-  }, [currentChat, user.token]);
+  }, [currentChat]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,13 +52,7 @@ const Messenger = () => {
     };
 
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/messages",
-        message,
-        {
-          //headers: { "x-access-token": user.token },
-        }
-      );
+      const res = await userRequest.post("messages", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
@@ -95,7 +78,13 @@ const Messenger = () => {
           <div className="chatMenu">
             <div className="chatMenuWrapper">
               {conversations.map((c, i) => (
-                <div key={i} onClick={() => {setCurrentChat(c); setActiveConversation(c.id)}}>
+                <div
+                  key={i}
+                  onClick={() => {
+                    setCurrentChat(c);
+                    setActiveConversation(c.id);
+                  }}
+                >
                   <Conversation
                     key={i}
                     conversation={c}
@@ -116,7 +105,6 @@ const Messenger = () => {
                         <Message
                           key={i}
                           message={m}
-                          currentUser={user?.user}
                           own={m.sender.id === user?.user?.id}
                         />
                       </div>

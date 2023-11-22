@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
-import { mobile } from "../responsive";
+import { mobile } from "../toolkit/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -81,7 +81,6 @@ const Login = () => {
     });
   };
 
-
   return (
     <Container>
       <Wrapper>
@@ -100,7 +99,7 @@ const Login = () => {
             LOGIN
           </Button>
           {error && <Error>Something went wrong...</Error>}
-          <Link >DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link href="/register">CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>

@@ -3,7 +3,7 @@ import "./publication.css";
 import { Publish, Book } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { userRequest } from "../../requestMethods";
+import { userRequest } from "../../toolkit/requestMethods";
 import { useDispatch } from "react-redux";
 import { addPublication } from "../../redux/apiCalls";
 import { useNavigate } from "react-router-dom";

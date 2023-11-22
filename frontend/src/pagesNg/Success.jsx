@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { userRequest } from "../requestMethods";
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { userRequest } from "../toolkit/requestMethods";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const GoHomeButton = styled.button`
   padding: 10px 20px;
@@ -25,7 +25,7 @@ const Success = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)

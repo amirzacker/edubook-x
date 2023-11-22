@@ -9,9 +9,9 @@ import {
   registerFailure,
   updateUserStart,
   updateUserSuccess,
-  updateUserFailure
+  updateUserFailure,
 } from "./userRedux";
-import { publicRequest, userRequest } from "../requestMethods";
+import { publicRequest, userRequest } from "../toolkit/requestMethods";
 import {
   getPublicationFailure,
   getPublicationStart,
@@ -26,8 +26,6 @@ import {
   addPublicationStart,
   addPublicationSuccess,
 } from "./publicationRedux";
-
-
 
 export const login = async (dispatch, user, onSuccess) => {
   dispatch(loginStart());
@@ -48,14 +46,19 @@ export const refreshToken = async (dispatch) => {
   const refreshToken = currentUser?.refresh_token;
 
   try {
-    const res = await publicRequest.post('/token/refresh', { refresh_token: refreshToken });
+    const res = await publicRequest.post("/token/refresh", {
+      refresh_token: refreshToken,
+    });
     const updatedUser = {
       ...currentUser,
       token: res.data.token,
-      refreshToken: res.data.refresh_token
+      refreshToken: res.data.refresh_token,
     };
     dispatch(refreshTokenRedux(updatedUser));
-    localStorage.setItem("persist:root", JSON.stringify({ ...user, currentUser: updatedUser }));
+    localStorage.setItem(
+      "persist:root",
+      JSON.stringify({ ...user, currentUser: updatedUser })
+    );
   } catch (err) {
     console.error("Error refreshing token", err);
     // Gérer l'erreur de rafraîchissement ici
@@ -65,7 +68,6 @@ export const refreshToken = async (dispatch) => {
 export const logout = (dispatch) => {
   dispatch(logoutStart()); // Utilisation de l'action logout définie dans userSlice
 };
-
 
 export const register = async (dispatch, newUser) => {
   dispatch(registerStart());
@@ -78,20 +80,21 @@ export const register = async (dispatch, newUser) => {
   }
 };
 
-
 export const updateUser = async (dispatch, userInfo) => {
   dispatch(updateUserStart());
   try {
-      const res = await userRequest.put(`/user`, userInfo);
-      dispatch(updateUserSuccess(res.data));
-      const persistedState = JSON.parse(localStorage.getItem("persist:root"));
-      persistedState.user.currentUser.user = { ...persistedState.user.currentUser.user, ...res.data };
-      localStorage.setItem("persist:root", JSON.stringify(persistedState));
+    const res = await userRequest.put(`/user`, userInfo);
+    dispatch(updateUserSuccess(res.data));
+    const persistedState = JSON.parse(localStorage.getItem("persist:root"));
+    persistedState.user.currentUser.user = {
+      ...persistedState.user.currentUser.user,
+      ...res.data,
+    };
+    localStorage.setItem("persist:root", JSON.stringify(persistedState));
   } catch (err) {
-      dispatch(updateUserFailure());
+    dispatch(updateUserFailure());
   }
 };
-
 
 export const getPublications = async (dispatch) => {
   dispatch(getPublicationStart());
@@ -132,5 +135,3 @@ export const addPublication = async (publication, dispatch) => {
     dispatch(addPublicationFailure());
   }
 };
-
-

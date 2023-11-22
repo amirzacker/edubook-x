@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import { publicRequest } from "../../requestMethods";
+import { publicRequest } from "../../toolkit/requestMethods";
 import styled from "styled-components";
-import { mobile } from "../../responsive";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import MailIcon from '@material-ui/icons/Mail';
+import { mobile } from "../../toolkit/responsive";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import MailIcon from "@material-ui/icons/Mail";
 import { useDispatch } from "react-redux";
-import { addPublication } from "../../redux/cartRedux"; 
+import { addPublication } from "../../redux/cartRedux";
 
 const StyledContainer = styled.div`
   background-color: white;
   border-radius: 8px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  max-width: 80%; 
-  margin: 2rem auto; 
-  padding: 1rem; 
-  height: auto; 
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  max-width: 80%;
+  margin: 2rem auto;
+  padding: 1rem;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +25,7 @@ const StyledContainer = styled.div`
 
   .image-wrapper img {
     width: 100%;
-    max-height: 60vh; 
+    max-height: 60vh;
     object-fit: contain;
   }
 
@@ -94,9 +95,7 @@ const Publication = () => {
   }, [publicationId]);
 
   const handleClick = () => {
-    dispatch(
-      addPublication({ ...publication })
-    );
+    dispatch(addPublication({ ...publication }));
   };
 
   return (
@@ -104,7 +103,7 @@ const Publication = () => {
       <Grid container>
         <Grid item xs={12} md={6} className="image-wrapper">
           <img src={publication.book?.image} alt={publication.book?.title} />
-          <br/>
+          <br />
           <Typography variant="h6" color="secondary">
             Auteur: <b>{publication.book?.author}</b>
           </Typography>
@@ -127,8 +126,12 @@ const Publication = () => {
           </Typography>
           <br />
           <div className="button-group">
-            <button className="custom-button" onClick={handleClick}><ShoppingCartIcon /> Add to Cart</button>
-            <button className="custom-button"><MailIcon /> Echanger</button>
+            <button className="custom-button" onClick={handleClick}>
+              <ShoppingCartIcon /> Add to Cart
+            </button>
+            <button className="custom-button">
+              <MailIcon /> Echanger
+            </button>
           </div>
         </Grid>
       </Grid>

@@ -1,15 +1,13 @@
 import { Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import { mobile } from "../responsive";
+import Footer from "../componentsNg/Footer";
+import Navbar from "../componentsNg/Navbar";
+import { mobile } from "../toolkit/responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
-import { userRequest } from "../requestMethods";
+import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
-
-
 
 const Container = styled.div``;
 
@@ -93,8 +91,6 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-
-
 const BookPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
@@ -143,7 +139,7 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const KEY = process.env.REACT_APP_STRIPE;
 
-console.log(KEY);
+  console.log(KEY);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
@@ -162,7 +158,8 @@ console.log(KEY);
         console.log(stripeToken);
         navigate("/success", {
           stripeData: res.data,
-          publications: cart, });
+          publications: cart,
+        });
       } catch {}
     };
     stripeToken && makeRequest();
@@ -195,12 +192,10 @@ console.log(KEY);
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
-                <ProductAmountContainer>
+                  <ProductAmountContainer>
                     <Remove />
                   </ProductAmountContainer>
-                  <BookPrice>
-                    $ {publication.price}
-                  </BookPrice>
+                  <BookPrice>$ {publication.price}</BookPrice>
                 </PriceDetail>
               </Product>
             ))}
@@ -210,9 +205,9 @@ console.log(KEY);
             <SummaryTitle>RECAPITULATIF</SummaryTitle>
             {cart?.publications?.map((publication) => (
               <SummaryItem>
-              <SummaryItemText>{publication?.book?.title}</SummaryItemText>
-              <SummaryItemPrice>$ {publication?.price}</SummaryItemPrice>
-            </SummaryItem>
+                <SummaryItemText>{publication?.book?.title}</SummaryItemText>
+                <SummaryItemPrice>$ {publication?.price}</SummaryItemPrice>
+              </SummaryItem>
             ))}
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>

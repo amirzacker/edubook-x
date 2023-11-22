@@ -4,7 +4,7 @@ import { Publish } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { updatePublication } from "../../redux/apiCalls";
 import "./publication.css";
-import { userRequest } from "../../requestMethods";
+import { userRequest } from "../../toolkit/requestMethods";
 // Importer les actions Redux si nécessaire
 
 const EditPublication = () => {
@@ -55,7 +55,7 @@ const EditPublication = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === 'price' ? parseInt(value) || 0 : value;
+    const newValue = name === "price" ? parseInt(value) || 0 : value;
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -64,7 +64,7 @@ const EditPublication = () => {
     setLoading(true);
     try {
       // Effectuer la requête de mise à jour
-     // await userRequest.put(`/publications/${publicationId}`, formData);
+      // await userRequest.put(`/publications/${publicationId}`, formData);
       updatePublication(publicationId, formData, dispatch);
       console.log(formData);
       alert("Publication mise à jour avec succès !");
@@ -76,7 +76,6 @@ const EditPublication = () => {
       setLoading(false);
     }
   };
-
 
   const handleBack = () => {
     navigate(-1); // Cela ramènera l'utilisateur à la page précédente
@@ -90,7 +89,7 @@ const EditPublication = () => {
           <button className="publicationAddButton">Mes annonces</button>
         </Link>
       </div>
-      <Link onClick={()=>  navigate(-1)}>
+      <Link onClick={() => navigate(-1)}>
         <button className="publicationBackButton">Retour</button>
       </Link>
 
