@@ -2,11 +2,32 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { userRequest } from "../requestMethods";
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+const GoHomeButton = styled.button`
+  padding: 10px 20px;
+  background-color: teal;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  &:hover {
+    background-color: #45a049;
+  }
+`;
 
 const Success = () => {
   const location = useLocation();
   console.log(location);
-  debugger
+  const navigate = useNavigate();
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
   const data = location.state?.stripeData;
   const cart = location.state?.cart;
@@ -17,15 +38,14 @@ const Success = () => {
     const createOrder = async () => {
       try {
         const res = await userRequest.post("/orders", {
-          userId: currentUser._id,
-          products: cart.products.map((item) => ({
-            productId: item._id,
-            quantity: item._quantity,
+          userId: currentUser.id,
+          publications: cart.publications.map((item) => ({
+            publicationId: item.id,
           })),
           amount: cart.total,
           address: data.billing_details.address,
         });
-        setOrderId(res.data._id);
+        setOrderId(res.data.id);
       } catch {}
     };
     data && createOrder();
@@ -44,7 +64,7 @@ const Success = () => {
       {orderId
         ? `Order has been created successfully. Your order number is ${orderId}`
         : `Successfull. Your order is being prepared...`}
-      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+      <GoHomeButton onClick={handleGoHome}>Retour à l'accueil</GoHomeButton>
     </div>
   );
 };

@@ -135,7 +135,7 @@ const NewPublication = () => {
           <button className="publicationAddButton">Mes annonces</button>
         </Link>
       </div>
-      
+
       <div className="publicationTop">
         <div className="publicationTopRight">
           <form className="publicationForm" onSubmit={handleSearch}>
@@ -339,15 +339,17 @@ const NewPublication = () => {
                   if (e.target.files && e.target.files[0]) {
                     const file = e.target.files[0];
                     const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour l'image
-                
+
                     const updatedBook = {
                       ...selectedBook,
-                      imageLinks: { ...selectedBook.imageLinks, thumbnail: imageUrl }, // Met à jour l'image
+                      imageLinks: {
+                        ...selectedBook.imageLinks,
+                        thumbnail: imageUrl,
+                      }, // Met à jour l'image
                     };
                     setSelectedBook(updatedBook);
                   }
                 }}
-                
               />
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>

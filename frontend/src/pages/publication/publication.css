@@ -1,0 +1,95 @@
+.publication-view {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    max-width: 50%; 
+    margin: 50px auto; 
+  }
+  
+  
+  .MuiContainer-root.publication-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80%;
+    margin: 2rem auto;
+    padding: 1rem;
+    height: auto;
+  }
+  
+  .publication-view .image-wrapper img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    width: 100%;
+    max-height: 60vh; 
+    object-fit: cover;
+  }
+  
+  .publication-view .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #000;
+    padding: 20px;
+  }
+  
+  .publication-view .text h2 {
+    color: #001524;
+    font-size: 35px;
+    padding-bottom: 30px;
+  }
+  
+  .publication-view .text h3 {
+    color: #000;
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  
+  .MuiContainer-root.publication-view .custom-button {
+    color: white;
+    background-color: teal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .MuiContainer-root.publication-view .custom-button:hover {
+    color: white;
+    background-color: #2a344a;
+  }
+  
+  .publication-view .MuiGrid-root .MuiGrid-item {
+    padding: 5px 15px;
+  }
+  
+  .carousel-caption {
+    top: 45%;
+  }
+  
+  .d-block {
+    height: 50vh;
+    opacity: 90%;
+  }
+  
+  .carousel-control-next {
+    display: none !important;
+  }
+  
+  .carousel-control-prev {
+    display: none !important;
+  }
+  
+  .carousel-indicators .active {
+    display: none !important;
+  }
+  
+  @media (min-width: 960px) {
+    .publication-view {
+      height: 100vh;
+    }
+  }

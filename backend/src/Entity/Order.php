@@ -2,41 +2,37 @@
 
 namespace App\Entity;
 
-use App\Repository\PublicationRepository;
+use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: PublicationRepository::class)]
-class Publication
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Table(name: '`order`')]
+class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["getPublication"])]
+    #[Groups(["getOrder"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["getPublication"])]
+    #[Groups(["getOrder"])]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'publications')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["getPublication"])]
-    private ?Book $book = null;
-
-    #[ORM\Column(length: 255)]
-    #[Groups(["getPublication"])]
-    private ?string $book_state = null;
-
     #[ORM\Column(nullable: true)]
-    #[Groups(["getPublication"])]
-    private ?int $price = null;
+    #[Groups(["getOrder"])]
+    private ?int $amount = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["getPublication"])]
-    private ?string $comment = null;
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["getOrder"])]
+    private ?string $address = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    #[Groups(["getOrder"])]
+    private array $publications = [];
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(["getPublication"])]
@@ -48,6 +44,7 @@ class Publication
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
+
 
     public function getId(): ?int
     {
@@ -66,50 +63,38 @@ class Publication
         return $this;
     }
 
-    public function getBook(): ?Book
+    public function getAmount(): ?int
     {
-        return $this->book;
+        return $this->amount;
     }
 
-    public function setBook(?Book $book): static
+    public function setAmount(?int $amount): static
     {
-        $this->book = $book;
+        $this->amount = $amount;
 
         return $this;
     }
 
-    public function getBookState(): ?string
+    public function getAddress(): ?string
     {
-        return $this->book_state;
+        return $this->address;
     }
 
-    public function setBookState(string $book_state): static
+    public function setAddress(string $address): static
     {
-        $this->book_state = $book_state;
+        $this->address = $address;
 
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPublications(): array
     {
-        return $this->price;
+        return $this->publications;
     }
 
-    public function setPrice(?int $price): static
+    public function setPublications(array $publications): static
     {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(?string $comment): static
-    {
-        $this->comment = $comment;
+        $this->publications = $publications;
 
         return $this;
     }
@@ -147,4 +132,5 @@ class Publication
 
         return $this;
     }
+
 }

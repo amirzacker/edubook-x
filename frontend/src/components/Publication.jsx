@@ -1,5 +1,4 @@
 import {
-  SearchOutlined,
   ShoppingCartOutlined,
 } from "@material-ui/icons";
 import VisibilityIcon from '@material-ui/icons/Visibility';

@@ -1,4 +1,4 @@
-import { Remove } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Footer from "../components/Footer";
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
 
-
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -36,8 +36,17 @@ const TopButton = styled.button`
   cursor: pointer;
   border: ${(props) => props.type === "filled" && "none"};
   background-color: ${(props) =>
-    props.type === "filled" ? "teal" : "transparent"};
+    props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
+`;
+
+const TopTexts = styled.div`
+  ${mobile({ display: "none" })}
+`;
+const TopText = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0px 10px;
 `;
 
 const Bottom = styled.div`
@@ -62,8 +71,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 150px;
-  object-fit: contain;
+  width: 200px;
 `;
 
 const Details = styled.div`
@@ -73,11 +81,18 @@ const Details = styled.div`
   justify-content: space-around;
 `;
 
-const BookTitle = styled.span``;
+const ProductName = styled.span``;
 
-const Author = styled.span``;
+const ProductId = styled.span``;
 
-const PublicationType = styled.span``;
+const ProductColor = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+`;
+
+const ProductSize = styled.span``;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -93,9 +108,13 @@ const ProductAmountContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const ProductAmount = styled.div`
+  font-size: 24px;
+  margin: 5px;
+  ${mobile({ margin: "5px 15px" })}
+`;
 
-
-const BookPrice = styled.div`
+const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
   ${mobile({ marginBottom: "20px" })}
@@ -134,16 +153,13 @@ const SummaryItemPrice = styled.span``;
 const Button = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: teal;
+  background-color: black;
   color: white;
   font-weight: 600;
 `;
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  const KEY = process.env.REACT_APP_STRIPE;
-
-console.log(KEY);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
@@ -156,10 +172,9 @@ console.log(KEY);
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/payment", {
-          stripeToken: stripeToken.id,
+          tokenId: stripeToken.id,
           amount: 500,
         });
-        console.log(stripeToken);
         navigate("/success", {
           stripeData: res.data,
           publications: cart, });
@@ -171,9 +186,13 @@ console.log(KEY);
     <Container>
       {/* <Navbar /> */}
       <Wrapper>
-        <Title>Mon Panier</Title>
+        <Title>YOUR BAG</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopTexts>
+            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Your Wishlist (0)</TopText>
+          </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
@@ -183,37 +202,44 @@ console.log(KEY);
                 <ProductDetail>
                   <Image src={publication.book.image} />
                   <Details>
-                    <BookTitle>
+                    <ProductName>
                       <b>Livre:</b> {publication.book.title}
-                    </BookTitle>
-                    <Author>
+                    </ProductName>
+                    <ProductId>
                       <b>Auteur:</b> {publication.book.author}
-                    </Author>
-                    <PublicationType>
-                      <b>Type:</b> {publication.book_state}
-                    </PublicationType>
+                    </ProductId>
+                    <ProductColor color={publication.color} />
+                    <ProductSize>
+                      <b>Type:</b> {publication.size}
+                    </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                 <ProductAmountContainer>
                     <Remove />
                   </ProductAmountContainer>
-                  <BookPrice>
+                  <ProductPrice>
                     $ {publication.price}
-                  </BookPrice>
+                  </ProductPrice>
                 </PriceDetail>
               </Product>
             ))}
             <Hr />
           </Info>
           <Summary>
-            <SummaryTitle>RECAPITULATIF</SummaryTitle>
-            {cart?.publications?.map((publication) => (
-              <SummaryItem>
-              <SummaryItemText>{publication?.book?.title}</SummaryItemText>
-              <SummaryItemPrice>$ {publication?.price}</SummaryItemPrice>
+            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryItem>
+              <SummaryItemText>Subtotal</SummaryItemText>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            ))}
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping</SummaryItemText>
+              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+            </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
