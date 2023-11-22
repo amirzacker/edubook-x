@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
+
 #[Route('/api', name: 'api_')]
 class MessageController extends AbstractController
 {
@@ -52,7 +53,6 @@ class MessageController extends AbstractController
         $message->setText($data['text']);
         $message->setConversation($conversation);
         $message->setSender($sender);
-        $message->setUpdatedAtValue();
         $message->setCreatedAtValue();
         $entityManager->persist($message);
         $entityManager->flush();

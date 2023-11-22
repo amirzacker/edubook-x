@@ -31,6 +31,16 @@ class PublicationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findAllOrderedByCreatedAt()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.createdAt', 'DESC') // Trie les publications par date de création, de la plus récente à la plus ancienne
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Publication[] Returns an array of Publication objects
 //     */

@@ -1,24 +1,114 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Success from "./pagesNg/Success";
+import { useSelector } from "react-redux";
+import Login from "./pagesNg/Login";
+import Register from "./pagesNg/Register";
+import Cart from "./pagesNg/Cart";
+import Messenger from "./pagesNg/messenger/Messenger";
+import Dashboard from "./componentsNg/Dashboard";
+import { Public } from "@material-ui/icons";
+import PublicationList from "./pagesNg/publication/PublicationList";
+import Publication from "./pagesNg/publication/Publication";
+import NewPublication from "./componentsNg/publication/NewPublication";
+import EditPublication from "./componentsNg/publication/EditPublication";
+import Profile from "./pagesNg/dashboard/Profile";
+import Publications from "./pagesNg/dashboard/MyPublications";
+import Home from "./pagesNg/Home";
+import NotFoundPage from "./pagesNg/NotFoundPage";
+
+const PrivateRoute = ({ children }) => {
+  const user = useSelector((state) => state.user.currentUser);
+  return user ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute = ({ children }) => {
+  const user = useSelector((state) => state.user.currentUser);
+  return user ? <Navigate to="/dashboard" /> : children;
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <Routes>
+        {/* Les routes sans AppLayout */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Home />
+            </PublicRoute>
+          }
+        />
+        <Route path="/success" element={<Success />} />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/publications"
+          element={
+            <PublicRoute>
+              <PublicationList />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/publications/:publicationId"
+          element={
+            <PublicRoute>
+              <Publication />
+            </PublicRoute>
+          }
+        />
+        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        {/* Les routes avec AppLayout */}
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path="/dashboard/messenger" element={<Messenger />} />
+          {/* <Route path="/dashboard/publications" element={<PublicationList />} /> */}
+          <Route path="/dashboard/publications" element={<Publications />} />
+          <Route
+            path="/dashboard/publications/:publicationId"
+            element={<EditPublication />}
+          />
+          <Route
+            path="/dashboard/publications/new"
+            element={<NewPublication />}
+          />
+          <Route path="/dashboard/profile" element={<Profile />} />
+          {/* <Route path="*" element={<Navigate to="/dashboard/publications" replace />} /> */}
+        </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Router>
   );
 }
 

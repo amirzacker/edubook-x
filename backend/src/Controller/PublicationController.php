@@ -23,7 +23,7 @@ class PublicationController extends AbstractController
     #[Route('/publications', name: 'publication.getAll', methods: ['GET'])]
     public function getAll(PublicationRepository $publicationRepository, SerializerInterface $serializer): JsonResponse
     {
-        $publications = $publicationRepository->findAll();
+        $publications = $publicationRepository->findAllOrderedByCreatedAt();
         $jsonPublications = $serializer->serialize($publications, 'json', ["groups" => "getPublication"]);
         return new JsonResponse($jsonPublications, Response::HTTP_OK, [], true);
     }
@@ -56,6 +56,7 @@ class PublicationController extends AbstractController
         $publication->setBookState($data['bookState']);
         $publication->setPrice($data['price']);
         $publication->setComment($data['comment']);
+        $publication->setCreatedAtValue();
 
         $entityManager->persist($publication);
         $entityManager->flush();
@@ -71,11 +72,11 @@ class PublicationController extends AbstractController
         if (!$publication) {
             return $this->json(['message' => 'Publication not found'], Response::HTTP_NOT_FOUND);
         }
-
+        $publication->setUpdatedAtValue();
         $updatedPublication = $serializer->deserialize($request->getContent(), Publication::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $publication]);
         $entityManager->flush();
 
-        $jsonPublication = $serializer->serialize($updatedPublication, 'json');
+        $jsonPublication = $serializer->serialize($updatedPublication, 'json',);
         return new JsonResponse($jsonPublication, Response::HTTP_OK, [], true);
     }
 
