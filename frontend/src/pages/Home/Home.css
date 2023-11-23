@@ -1,15 +1,31 @@
+.all-content {
+  /* border: solid 3px orange  */
+  font-family: 'Nunito', sans-serif;
+}
+
+.home-container {
+  display: flex;
+  align-items: center; /* Centre verticalement les éléments enfants */
+}
+
+.animation-container {
+  flex: 1; /* Fait en sorte que l'animation prenne tout l'espace disponible */
+}
+
 .about-container {
-    max-width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-  }
+  flex: 1; /* Fait en sorte que le conteneur de texte prenne tout l'espace disponible */
+  padding: 20px; /* Ajoute une marge intérieure pour l'espace entre le texte et l'animation */
+}
+
+/* Ajoutez des styles supplémentaires au besoin */
+
   
   h1 {
     color: white;
   }
   
   p {
-    font-size: 16px;
+    font-size: 0,1em;
     color: white;
   }
 
