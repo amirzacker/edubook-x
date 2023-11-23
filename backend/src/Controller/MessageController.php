@@ -15,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Mercure\Publisher;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 #[Route('/api', name: 'api_')]
 class MessageController extends AbstractController
@@ -30,7 +33,7 @@ class MessageController extends AbstractController
     }
 
     #[Route('/messages', name: 'create.messages', methods: ['POST'])]
-    public function create(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer): JsonResponse
+    public function create(ManagerRegistry $doctrine, Request $request, SerializerInterface $serializer,  HubInterface $hub): JsonResponse
     {
         $entityManager = $doctrine->getManager();
         $data = json_decode($request->getContent(), true);
@@ -56,6 +59,29 @@ class MessageController extends AbstractController
         $message->setCreatedAtValue();
         $entityManager->persist($message);
         $entityManager->flush();
+
+        // $update = new Update(
+        //     'http://localhost:80/.well-known/mercure?topic=conversation/'.$conversation->getId(),
+        //     $serializer->serialize($message, 'json', ["groups" => "getAllmessage"])
+        // );
+        // $publisher($update);
+
+        // dd($update); 
+        // $update = new Update(
+        //     'http://localhost:80/.well-known/mercure?topic=conversation/'.$conversation->getId(),
+        //     "",
+        // );
+        // $hub->publish($update);
+        $update = new Update(
+            'http://localhost:80/.well-known/mercure?topic=conversation/'.$conversation->getId(),
+            $serializer->serialize($message, 'json', ["groups" => "getAllmessage"]), true
+        );
+        $hub->publish($update);
+        
+        dd($update); 
+
+
+        //$publisher($update);
 
         $jsonMessage = $serializer->serialize($message, 'json', ["groups" => "getAllmessage"]);
         return new JsonResponse($jsonMessage, Response::HTTP_CREATED,[], true);

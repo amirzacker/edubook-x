@@ -16,21 +16,42 @@ services:
 ###< doctrine/doctrine-bundle ###
 
 ###> symfony/mercure-bundle ###
+  # mercure:
+  #   image: dunglas/mercure
+  #   restart: unless-stopped
+  #   environment:
+  #     SERVER_NAME: ':80'
+  #     MERCURE_PUBLISHER_JWT_KEY: '%env(MERCURE_JWT_SECRET)%'
+  #     MERCURE_SUBSCRIBER_JWT_KEY: '%env(MERCURE_JWT_SECRET)%'
+  #     # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
+  #     MERCURE_EXTRA_DIRECTIVES: |
+  #       cors_origins http://127.0.0.1:8000 http://127.0.0.1:3000
+  #   # Comment the following line to disable the development mode
+  #   command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+  #   volumes:
+  #     - mercure_data:/data
+  #     - mercure_config:/config
+
   mercure:
     image: dunglas/mercure
     restart: unless-stopped
     environment:
+      # Uncomment the following line to disable HTTPS
       SERVER_NAME: ':80'
-      MERCURE_PUBLISHER_JWT_KEY: '%env(MERCURE_JWT_SECRET)%'
-      MERCURE_SUBSCRIBER_JWT_KEY: '%env(MERCURE_JWT_SECRET)%'
-      # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
+      MERCURE_PUBLISHER_JWT_KEY: 'amircentre'
+      MERCURE_SUBSCRIBER_JWT_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.yNZvrVvATGXFh6HNp-PD8FYEKkJMtJchsvFYcJEY6go'
       MERCURE_EXTRA_DIRECTIVES: |
-        cors_origins http://127.0.0.1:8000 http://127.0.0.1:3000
-    # Comment the following line to disable the development mode
-    command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+         cors_origins http://localhost:3000
+    # Uncomment the following line to enable the development mode
+    command:  /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+    ports:
+      - '80:80'
+      - '443:443'
     volumes:
       - mercure_data:/data
       - mercure_config:/config
+
+    
 ###< symfony/mercure-bundle ###
 
 volumes:
