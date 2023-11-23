@@ -4,10 +4,10 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Header, Footer } from "./components/organisms";
-import { CardBook } from "./components/atoms";
 import booksData from './booksData';
 import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
+import Cart from './pages/Cart/Cart';
 
 function App() {
 	return (
@@ -18,6 +18,7 @@ function App() {
 					<Routes>
 						<Route path="/home" element={<Home books={booksData} />} />
 						<Route path="/contact" element={<Contact />} />
+						<Route path="/cart" element={<Cart />} />
 					</Routes>
 						<Footer />
 				</header>

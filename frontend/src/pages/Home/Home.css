@@ -18,12 +18,11 @@
   }
   
   .search-bar input {
-    width: 50%;
+    width: 30%;
     font-size: 16px;
   }
   
-
-  .card-library {
+.card-library {
     display: flex;
     padding: 1%; /* Espacement autour de la bibliothèque de cartes */
     margin: 0 auto;

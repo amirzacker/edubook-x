@@ -1,7 +1,7 @@
 import livre1 from './components/atoms/CardBook/livre1.jpg';
 
 const booksData = [
-  { title: "Le rouge et le Noir", price: 10, image: livre1 },
+  { title: "Le rouge et le Noirqqqqqqqqqqqqqqq", price: 10, image: livre1 },
   { title: "Don Juan", price: 10, image: livre1 },
   { title: "La Maison au Sortilège", price: 10, image: livre1 },
   { title: "Le garçon et le Héron", price: 10, image: livre1 },
@@ -10,7 +10,7 @@ const booksData = [
   { title: "Le Grand Prince", price: 12.98, image: livre1 },
   { title: "Le Moyen Prince", price: 12.97, image: livre1 },
   { title: "No Way", price: 19999, image: livre1 },
-  { title: "No Way", price: 19999, image: livre1 }
+  { title: "Yes Way", price: 19999, image: livre1 }
 ];
 
 export default booksData;

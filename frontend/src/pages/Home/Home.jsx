@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { CardBook } from '../../components/atoms';
+import Faq  from '../../components/molecules/Faq/Faq';
+
 import './Home.css'; 
 
 const Home = ({ books }) => {
@@ -39,6 +41,7 @@ const Home = ({ books }) => {
           <CardBook key={index} title={book.title} price={book.price} image={book.image} />
         ))}
       </div>
+      <Faq />
     </div>
   );
 }

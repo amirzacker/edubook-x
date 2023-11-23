@@ -38,7 +38,7 @@
 }
 
 /* Styles spécifiques au panier */
-.nav li a[href="/panier"]:after {
+.nav li a[href="/cart"]:after {
   content: '\1F6D2';
 }
 
