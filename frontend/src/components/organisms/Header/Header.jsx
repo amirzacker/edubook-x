@@ -9,11 +9,10 @@ const Header = () => {
     return (
         <div className="header">
             <div className="logo-container">
-            <Link to="/home"><img src={logo} className="logo" alt="Logo" /></Link>
-                <Link to="/home"><div className="title">EduBookX</div></Link>
+            <Link to=""><img src={logo} className="logo" alt="Logo" /></Link>
+                <Link to=""><div className="title">EduBookX</div></Link>
             </div>   
             <ul className="nav">
-                <li><Link to="/home">Home</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
                 <li><Link to="/cart"></Link></li>
             </ul>

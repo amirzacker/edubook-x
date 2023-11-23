@@ -16,7 +16,7 @@ function App() {
 				<header className="App-header">
 					<Header />
 					<Routes>
-						<Route path="/home" element={<Home books={booksData} />} />
+						<Route path="" element={<Home books={booksData} />} />
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/cart" element={<Cart />} />
 					</Routes>
