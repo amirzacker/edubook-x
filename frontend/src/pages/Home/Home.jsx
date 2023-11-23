@@ -26,7 +26,7 @@ const Home = ({ books }) => {
         <div className="all-content">
             <div className="home-container">
                 <div className="animation-container">
-                    <Lottie options={defaultOptions} height={500} width={500} />
+                    <Lottie options={defaultOptions} height="auto" width="100%" />
                 </div>
                 <div className="about-container">
                     <h1>EduBookX</h1>

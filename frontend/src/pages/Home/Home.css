@@ -10,6 +10,8 @@
 
 .animation-container {
   flex: 1; /* Fait en sorte que l'animation prenne tout l'espace disponible */
+  max-width: 500px; /* Définissez la largeur maximale souhaitée */
+  margin: 0 auto; /* Centre l'animation horizontalement */
 }
 
 .about-container {
