@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register, login } from "../redux/apiCalls";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Header from "../componentsNg/header/Header";
 
 const Container = styled.div`
   width: 100vw;
@@ -18,6 +19,12 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const Link = styled.a`
+  margin: 5px 0px;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 const Wrapper = styled.div`
@@ -60,7 +67,7 @@ const Button = styled.button`
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({
-    name: "",
+    firstname: "",
     lastName: "",
     username: "",
     email: "",
@@ -75,6 +82,10 @@ const Register = () => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userInfo.password !== userInfo.confirmPassword) {
@@ -82,16 +93,15 @@ const Register = () => {
       return;
     }
     const user = {
-      // Adapt this object according to your backend requirements
-      name: userInfo.name,
-      lastName: userInfo.lastName,
-      username: userInfo.username,
+      lastname: userInfo.lastName,
+      firstname: userInfo.lastName,
+      username: userInfo.email,
       email: userInfo.email,
       password: userInfo.password,
     };
 
     try {
-      await register(dispatch, userInfo);
+      await register(dispatch, user);
       login(
         dispatch,
         { username: userInfo.email, password: userInfo.password },
@@ -105,13 +115,15 @@ const Register = () => {
   };
 
   return (
+    <>
+      <Header/>
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Link href="/login">Do You a account LOGIN</Link>
+        <Link onClick={goToLogin}>Do You a account LOGIN</Link>
         <Form onSubmit={handleSubmit}>
           <Input
-            name="name"
+            name="firstname"
             placeholder="Prénom"
             onChange={handleInputChange}
           />
@@ -151,6 +163,7 @@ const Register = () => {
         {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
       </Wrapper>
     </Container>
+    </>
   );
 };
 

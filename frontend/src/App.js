@@ -41,9 +41,7 @@ function App() {
         <Route
           path="/"
           element={
-            <PublicRoute>
               <Home />
-            </PublicRoute>
           }
         />
         <Route path="/success" element={<Success />} />
@@ -58,28 +56,17 @@ function App() {
         <Route
           path="/publications"
           element={
-            <PublicRoute>
               <PublicationList />
-            </PublicRoute>
           }
         />
         <Route
           path="/publications/:publicationId"
           element={
-            <PublicRoute>
               <Publication />
-            </PublicRoute>
           }
         />
         <Route path="/cart" element={<Cart />} />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
+        <Route path="/login" element={<Login />}/>
 
         {/* Les routes avec AppLayout */}
 

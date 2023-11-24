@@ -43,6 +43,21 @@ const Messenger = () => {
     getMessages();
   }, [currentChat]);
 
+  useEffect(() => {
+    if (currentChat) {
+      const eventSource = new EventSource(`http://localhost:80/.well-known/mercure?topic=conversation/${currentChat.id}`);
+      eventSource.onmessage = event => {
+        const newMessage = JSON.parse(event.data);
+        setMessages(prevMessages => [...prevMessages, newMessage]);
+      };
+  
+      return () => {
+        eventSource.close();
+      };
+    }
+  }, [currentChat]);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {

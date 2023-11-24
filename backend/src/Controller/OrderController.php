@@ -49,6 +49,7 @@ class OrderController extends AbstractController
         $order->setAmount($data['amount']);
         $order->setAddress($data['address']);
         $order->setPublications($data['publications']);
+        $order->setStatus('pending');
 
         $entityManager->persist($order);
         $entityManager->flush();
