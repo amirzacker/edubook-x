@@ -8,6 +8,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
+import Header from "../componentsNg/header/Header";
 
 const Container = styled.div``;
 
@@ -16,10 +17,6 @@ const Wrapper = styled.div`
   ${mobile({ padding: "10px" })}
 `;
 
-const Title = styled.h1`
-  font-weight: 300;
-  text-align: center;
-`;
 
 const Top = styled.div`
   display: flex;
@@ -50,6 +47,8 @@ const Info = styled.div`
 
 const Product = styled.div`
   display: flex;
+  margin: 10px;
+  border-bottom: .1px solid grey;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
 `;
@@ -60,7 +59,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 150px;
+  width: 120px;
   object-fit: contain;
 `;
 
@@ -166,12 +165,11 @@ const Cart = () => {
   }, [stripeToken, cart.total, navigate]);
   return (
     <Container>
-      {/* <Navbar /> */}
+      <Header/>
       <Wrapper>
-        <Title>Mon Panier</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton>CONTINUER SUR EDUBOOK</TopButton>
+          <TopButton type="filled">Commander</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -223,12 +221,12 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             >
-              <Button>CHECKOUT NOW</Button>
+              <Button>COMMANDER MAINTENANT</Button>
             </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
-      {/* <Footer /> */}
+      <Footer />
     </Container>
   );
 };

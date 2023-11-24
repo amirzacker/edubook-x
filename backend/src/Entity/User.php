@@ -40,6 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Conversation::class, mappedBy: 'members')]
     private Collection $conversations;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getAllmessage", "getPublication", "getConversation", "getUser", "getOrder"])]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastname = null;
+
     public function __construct()
     {
         $this->conversations = new ArrayCollection();
@@ -150,6 +157,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->conversations->removeElement($conversation)) {
             $conversation->removeMember($this);
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }

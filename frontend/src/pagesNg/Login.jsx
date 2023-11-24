@@ -4,6 +4,8 @@ import { login } from "../redux/apiCalls";
 import { mobile } from "../toolkit/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Header from "../componentsNg/header/Header";
+import Navbar from "../componentsNg/header/Header";
 
 const Container = styled.div`
   width: 100vw;
@@ -81,7 +83,13 @@ const Login = () => {
     });
   };
 
+  const goToRegister = () => {
+      navigate("/register");
+  };
+
   return (
+    <>
+      <Navbar/>
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
@@ -100,10 +108,11 @@ const Login = () => {
           </Button>
           {error && <Error>Something went wrong...</Error>}
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link href="/register">CREATE A NEW ACCOUNT</Link>
+          <Link onClick={goToRegister}>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
     </Container>
+    </>
   );
 };
 

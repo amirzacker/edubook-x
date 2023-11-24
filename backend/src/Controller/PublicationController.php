@@ -56,6 +56,7 @@ class PublicationController extends AbstractController
         $publication->setBookState($data['bookState']);
         $publication->setPrice($data['price']);
         $publication->setComment($data['comment']);
+        $publication->setStatus('pending');
         $publication->setCreatedAtValue();
 
         $entityManager->persist($publication);
