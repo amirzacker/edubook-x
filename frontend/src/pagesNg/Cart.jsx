@@ -1,5 +1,5 @@
 import { Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Footer from "../componentsNg/Footer";
 import Navbar from "../componentsNg/Navbar";
@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentsNg/header/Header";
+import { removePublication } from "../redux/cartRedux";
+import { colors } from "@material-ui/core";
 
 const Container = styled.div``;
 
@@ -142,6 +144,7 @@ const Cart = () => {
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -163,6 +166,13 @@ const Cart = () => {
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, navigate]);
+
+  const handleRemove = (publication) => {
+    dispatch(removePublication(publication));
+  };
+
+  
+
   return (
     <Container>
       <Header/>
@@ -191,7 +201,7 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Remove />
+                    <Remove style={{cursor: "pointer", color: "red"}}  onClick={() => handleRemove(publication)} />
                   </ProductAmountContainer>
                   <BookPrice>$ {publication.price}</BookPrice>
                 </PriceDetail>

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { mobile } from "../../toolkit/responsive";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPublication } from "../../redux/cartRedux";
 
 const StyledContainer = styled.div`
@@ -98,6 +98,14 @@ const Publication = () => {
     dispatch(addPublication({ ...publication }));
   };
 
+  const cart = useSelector((state) => state.cart);
+
+  const isInCart = cart.publications.some(
+    (item) => item.id === publication.id
+  );
+
+
+
   return (
     <StyledContainer>
       <Grid container>
@@ -126,7 +134,7 @@ const Publication = () => {
           </Typography>
           <br />
           <div className="button-group">
-            <button className="custom-button" onClick={handleClick}>
+            <button disabled={isInCart} className="custom-button" onClick={handleClick}>
               <ShoppingCartIcon /> Add to Cart
             </button>
             <button className="custom-button">
