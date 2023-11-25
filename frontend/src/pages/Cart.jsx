@@ -1,14 +1,14 @@
 import { Remove } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Footer from "../componentsNg/Footer";
-import Navbar from "../componentsNg/Navbar";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import { mobile } from "../toolkit/responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
-import Header from "../componentsNg/header/Header";
+import Header from "../components/header/Header";
 import { removePublication } from "../redux/cartRedux";
 import { colors } from "@material-ui/core";
 
@@ -18,7 +18,6 @@ const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
-
 
 const Top = styled.div`
   display: flex;
@@ -50,7 +49,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   margin: 10px;
-  border-bottom: .1px solid grey;
+  border-bottom: 0.1px solid grey;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
 `;
@@ -171,11 +170,9 @@ const Cart = () => {
     dispatch(removePublication(publication));
   };
 
-  
-
   return (
     <Container>
-      <Header/>
+      <Header />
       <Wrapper>
         <Top>
           <TopButton>CONTINUER SUR EDUBOOK</TopButton>
@@ -201,7 +198,10 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Remove style={{cursor: "pointer", color: "red"}}  onClick={() => handleRemove(publication)} />
+                    <Remove
+                      style={{ cursor: "pointer", color: "red" }}
+                      onClick={() => handleRemove(publication)}
+                    />
                   </ProductAmountContainer>
                   <BookPrice>$ {publication.price}</BookPrice>
                 </PriceDetail>
