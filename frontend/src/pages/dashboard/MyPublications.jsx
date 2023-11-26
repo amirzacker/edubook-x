@@ -58,6 +58,14 @@ const EditButton = styled.button`
   border: none;
   border-radius: 10px;
   padding: 5px 10px;
+  background-color: #f56918;
+  color: white;
+  cursor: pointer;
+`;
+const DetailButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
   background-color: #3bb077;
   color: white;
   cursor: pointer;
@@ -117,6 +125,9 @@ const Publications = () => {
             <Actions>
               <Link to={`/dashboard/publications/${publication.id}`}>
                 <EditButton>Edit</EditButton>
+              </Link>
+               <Link to={`/dashboard/publications/detail/${publication.id}`}>
+                <DetailButton>Détail</DetailButton>
               </Link>
               <DeleteButton onClick={() => handleDelete(publication.id)} />
             </Actions>

@@ -22,6 +22,7 @@ import Publications from "./pages/dashboard/MyPublications";
 import Home from "./pages/Home";
 import NotFoundPage from "./pages/NotFoundPage";
 import MyOrders from "./pages/dashboard/MyOrders";
+import DetailPublication from "./components/publication/DetailPublication";
 
 const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.user.currentUser);
@@ -70,6 +71,10 @@ function App() {
           <Route
             path="/dashboard/publications/:publicationId"
             element={<EditPublication />}
+          />
+          <Route
+            path="/dashboard/publications/detail/:publicationId"
+            element={<DetailPublication />}
           />
           <Route
             path="/dashboard/publications/new"
