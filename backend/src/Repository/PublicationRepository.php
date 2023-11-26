@@ -31,6 +31,17 @@ class PublicationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByCategory(int $categoryId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.book', 'b')
+            ->join('b.category', 'c')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+    
 
     public function findAllOrderedByCreatedAt()
     {

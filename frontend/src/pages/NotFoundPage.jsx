@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/header/Header';
+import Footer from '../components/Footer';
 
 // Styles
 const NotFoundContainer = styled.div`
@@ -44,11 +46,15 @@ const NotFoundPage = () => {
   };
 
   return (
+    <>
+    <Header/>
     <NotFoundContainer>
       <NotFoundTitle>404 Not Found</NotFoundTitle>
       <NotFoundText>Désolé, la page que vous cherchez n'existe pas.</NotFoundText>
       <GoHomeButton onClick={handleGoHome}>Retour à l'accueil</GoHomeButton>
     </NotFoundContainer>
+    <Footer/>
+    </>
   );
 };
 

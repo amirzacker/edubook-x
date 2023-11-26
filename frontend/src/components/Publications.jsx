@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Publication from "./Publication"; 
-import axios from "axios";
+import Publication from "./Publication";
+import Pagination from "@material-ui/lab/Pagination";
+import { publicRequest } from "../toolkit/requestMethods";
 
 const Container = styled.div`
   padding: 20px;
@@ -10,59 +11,72 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-const Publications = ({ cat, filters, sort }) => {
-  const [publications, setPublications] = useState([]); 
-  const [filteredPublications, setFilteredPublications] = useState([]); 
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const Publications = ({ cat, sort }) => {
+  const [publications, setPublications] = useState([]);
+  const [filteredPublications, setFilteredPublications] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8; // Définissez ici le nombre d'articles par page
 
   useEffect(() => {
-    const getPublications = async () => { 
+    const getPublications = async () => {
       try {
-        const res = await axios.get(
-          cat
-            ? `http://localhost:8000/api/publications?category=${cat}`
-            : "http://localhost:8000/api/publications"
+        const res = await publicRequest.get(
+          cat ? `publications/category/${cat}` : "publications"
         );
-        setPublications(res.data); 
+        setPublications(res.data);
       } catch (err) {}
     };
     getPublications();
   }, [cat]);
 
   useEffect(() => {
-    cat &&
+    if (sort) {
       setFilteredPublications(
-        publications.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        )
-      );
-  }, [publications, cat, filters]);
-
-  useEffect(() => {
-    if (sort === "newest") {
-      setFilteredPublications((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
-      );
-    } else if (sort === "asc") {
-      setFilteredPublications((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
+        publications.filter((publication) => publication.book_state === sort)
       );
     } else {
-      setFilteredPublications((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+      setFilteredPublications(publications);
     }
-  }, [sort]);
+  }, [publications, sort]);
 
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const currentItems = sort
+    ? filteredPublications.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    : publications.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      );
+
+  const pagesCount = Math.ceil(publications.length / itemsPerPage);
   return (
-    <Container>
-      {cat
-        ? filteredPublications.map((item) => <Publication item={item} key={item.id} />)
-        : publications
-            .slice(0, 8)
-            .map((item) => <Publication item={item} key={item.id} />)}
-    </Container>
+    <>
+      <Container>
+        {currentItems.map((item) => (
+          <Publication item={item} key={item.id} />
+        ))}
+      </Container>
+      <PaginationContainer>
+        <Pagination
+          count={pagesCount}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </PaginationContainer>
+    </>
   );
 };
 

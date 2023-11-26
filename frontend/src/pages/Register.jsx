@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { register, login } from "../redux/apiCalls";
 
 import { useNavigate } from "react-router-dom";
-import Header from "../componentsNg/header/Header";
+import Header from "../components/header/Header";
 
 const Container = styled.div`
   width: 100vw;
@@ -84,7 +84,7 @@ const Register = () => {
 
   const goToLogin = () => {
     navigate("/login");
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,53 +116,53 @@ const Register = () => {
 
   return (
     <>
-      <Header/>
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Link onClick={goToLogin}>Do You a account LOGIN</Link>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            name="firstname"
-            placeholder="Prénom"
-            onChange={handleInputChange}
-          />
-          <Input
-            name="lastName"
-            placeholder="Nom de famille"
-            onChange={handleInputChange}
-          />
-          <Input
-            name="username"
-            placeholder="Nom d'utilisateur"
-            onChange={handleInputChange}
-          />
-          <Input
-            name="email"
-            placeholder="Email"
-            onChange={handleInputChange}
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="Mot de passe"
-            onChange={handleInputChange}
-          />
-          <Input
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirmer le mot de passe"
-            onChange={handleInputChange}
-          />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button type="submit">CREATE</Button>
-        </Form>
-        {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
-      </Wrapper>
-    </Container>
+      <Header />
+      <Container>
+        <Wrapper>
+          <Title>CREATE AN ACCOUNT</Title>
+          <Link onClick={goToLogin}>Do You a account LOGIN</Link>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              name="firstname"
+              placeholder="Prénom"
+              onChange={handleInputChange}
+            />
+            <Input
+              name="lastName"
+              placeholder="Nom de famille"
+              onChange={handleInputChange}
+            />
+            <Input
+              name="username"
+              placeholder="Nom d'utilisateur"
+              onChange={handleInputChange}
+            />
+            <Input
+              name="email"
+              placeholder="Email"
+              onChange={handleInputChange}
+            />
+            <Input
+              name="password"
+              type="password"
+              placeholder="Mot de passe"
+              onChange={handleInputChange}
+            />
+            <Input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirmer le mot de passe"
+              onChange={handleInputChange}
+            />
+            <Agreement>
+              By creating an account, I consent to the processing of my personal
+              data in accordance with the <b>PRIVACY POLICY</b>
+            </Agreement>
+            <Button type="submit">CREATE</Button>
+          </Form>
+          {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
+        </Wrapper>
+      </Container>
     </>
   );
 };

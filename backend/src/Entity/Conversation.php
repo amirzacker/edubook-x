@@ -38,7 +38,9 @@ class Conversation
     {
         $this->messages = new ArrayCollection();
         $this->members = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
+  
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -53,8 +55,11 @@ class Conversation
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
+    
 
     #[ORM\PreUpdate]
     public function setUpdatedAtValue(): void

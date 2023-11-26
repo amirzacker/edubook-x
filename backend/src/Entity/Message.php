@@ -37,10 +37,15 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(["getAllmessage"])]
     private ?User $sender = null;
-
+ 
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+        
+    }
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
@@ -51,7 +56,9 @@ class Message
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        if (!$this->createdAt) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 
     #[ORM\PreUpdate]

@@ -154,7 +154,7 @@ const Cart = () => {
       try {
         const res = await userRequest.post("/payment", {
           stripeToken: stripeToken.id,
-          amount: 500,
+          amount: cart.total,
         });
         console.log(stripeToken);
         navigate("/success", {
@@ -164,7 +164,7 @@ const Cart = () => {
       } catch {}
     };
     stripeToken && makeRequest();
-  }, [stripeToken, cart.total, navigate]);
+  }, [stripeToken, cart, navigate]);
 
   const handleRemove = (publication) => {
     dispatch(removePublication(publication));
@@ -175,7 +175,7 @@ const Cart = () => {
       <Header />
       <Wrapper>
         <Top>
-          <TopButton>CONTINUER SUR EDUBOOK</TopButton>
+          <TopButton onClick={()=> navigate('/publications')} >CONTINUER SUR EDUBOOK</TopButton>
           <TopButton type="filled">Commander</TopButton>
         </Top>
         <Bottom>
@@ -223,7 +223,7 @@ const Cart = () => {
             </SummaryItem>
             <StripeCheckout
               name="Edubook-X"
-              image="https://avatars.githubusercontent.com/u/1486366?v=4"
+              image="https://akshatbookstore.netlify.app/static/media/circles.0e0f82e29821aa79cbd5.png"
               billingAddress
               shippingAddress
               description={`Your total is $${cart.total}`}

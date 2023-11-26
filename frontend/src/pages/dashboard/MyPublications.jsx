@@ -71,7 +71,7 @@ const Publications = () => {
   const dispatch = useDispatch();
   const publications = useSelector((state) => state.publication.publications);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 3;
   const pagesCount = Math.ceil(publications.length / itemsPerPage);
 
   useEffect(() => {

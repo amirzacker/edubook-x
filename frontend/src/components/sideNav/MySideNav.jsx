@@ -8,12 +8,12 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./MySideNav.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../redux/apiCalls";
+import { logout } from "../../redux/apiCalls";
+
 
 const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const handleToggle = (expanded) => {
     setSidebarOpen(expanded);
@@ -21,7 +21,7 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
 
   const handleSelect = (eventKey) => {
     setSidebarOpen(false);
-    if (eventKey==='logout') {
+    if (eventKey === "logout") {
       handleLogout();
       return;
     }
@@ -32,7 +32,6 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
     logout(dispatch);
     navigate("/login"); // Rediriger vers la page de connexion après la déconnexion
   };
-
 
   useEffect(() => {
     if (sidebaropen) {
@@ -66,7 +65,7 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
           </NavIcon>
           <NavText>Profil</NavText>
         </NavItem>
-        <NavItem  eventKey="logout">
+        <NavItem eventKey="logout">
           <NavIcon>
             <ExitToAppIcon />
           </NavIcon>

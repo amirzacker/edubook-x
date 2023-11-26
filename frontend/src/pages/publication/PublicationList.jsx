@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import Navbar from "../../componentsNg/Navbar";
-import Publications from "../../componentsNg/Publications";
-import Footer from "../../componentsNg/Footer";
+import Publications from "../../components/Publications";
+import Footer from "../../components/Footer";
 import { mobile } from "../../toolkit/responsive";
 import { useLocation } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Header from "../../components/header/Header";
+import { publicRequest } from "../../toolkit/requestMethods";
 
 const Container = styled.div``;
 
@@ -37,44 +38,50 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const PublicationList = () => {
-  const location = useLocation();
-  const cat = location.pathname.split("/")[2];
-  const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState("vente");
+  const [cat, setCat] = useState(null);
+  const [sort, setSort] = useState();
+  const [categories, setCategories] = useState([]);
 
-  const handleFilters = (e) => {
-    const value = e.target.value;
-    setFilters({
-      ...filters,
-      [e.target.name]: value,
-    });
-  };
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await publicRequest.get("categories");
+        setCategories(res.data);
+      } catch (err) {}
+    };
+    getCategories();
+  }, []);
 
   return (
-    <Container>
-      <Title>{cat}</Title>
-      <FilterContainer>
-        <Filter>
-          <FilterText>Filter Livres:</FilterText>
-          <Select name="cat" onChange={handleFilters}>
-            <Option disabled>Categorie</Option>
-            <Option>fiction</Option>
-            <Option>General</Option>
-            <Option>litterature</Option>
-          </Select>
-        </Filter>
-        <Filter>
-          <FilterText>Trier Publications:</FilterText>
-          <Select name="sort" onChange={(e) => setSort(e.target.value)}>
-            <Option disabled>Type de publication</Option>
-            <Option>Vente</Option>
-            <Option>Don</Option>
-            <Option>Echange</Option>
-          </Select>
-        </Filter>
-      </FilterContainer>
-      <Publications cat={cat} filters={filters} sort={sort} />
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <FilterContainer>
+          <Filter>
+            <FilterText>Filter Livres:</FilterText>
+            <Select name="cat" onChange={(e) => setCat(e.target.value)}>
+              <Option >Categorie</Option>
+              {categories.map((item) => (
+                <Option value={item.id} key={item.id}>
+                  {item.name}
+                </Option>
+              ))}
+            </Select>
+          </Filter>
+          <Filter>
+            <FilterText>Trier Publications:</FilterText>
+            <Select name="sort" onChange={(e) => setSort(e.target.value)}>
+              <Option > Choisir Type de publication</Option>
+              <Option value="exchange">Neuf</Option>
+              <Option value="Usé">Usé</Option>
+              <Option value="Très usé">Très usé</Option>
+            </Select>
+          </Filter>
+        </FilterContainer>
+        <Publications cat={cat}  sort={sort} />
+      </Container>
+      <Footer />
+    </>
   );
 };
 

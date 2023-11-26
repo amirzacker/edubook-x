@@ -4,8 +4,9 @@ import { login } from "../redux/apiCalls";
 import { mobile } from "../toolkit/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Header from "../componentsNg/header/Header";
-import Navbar from "../componentsNg/header/Header";
+import Navbar from "../components/header/Header";
+import Header from "../components/header/Header";
+import Footer from "../components/Footer";
 
 const Container = styled.div`
   width: 100vw;
@@ -84,34 +85,35 @@ const Login = () => {
   };
 
   const goToRegister = () => {
-      navigate("/register");
+    navigate("/register");
   };
 
   return (
     <>
-      <Navbar/>
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button onClick={handleClick} disabled={isFetching}>
-            LOGIN
-          </Button>
-          {error && <Error>Something went wrong...</Error>}
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link onClick={goToRegister}>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+      <Header/>
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form>
+            <Input
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={handleClick} disabled={isFetching}>
+              LOGIN
+            </Button>
+            {error && <Error>Something went wrong...</Error>}
+            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+            <Link onClick={goToRegister}>CREATE A NEW ACCOUNT</Link>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer/>
     </>
   );
 };

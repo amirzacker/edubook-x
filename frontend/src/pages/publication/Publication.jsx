@@ -8,6 +8,8 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { addPublication } from "../../redux/cartRedux";
+import Header from "../../components/header/Header";
+import Footer from "../../components/Footer";
 
 const StyledContainer = styled.div`
   background-color: white;
@@ -100,50 +102,56 @@ const Publication = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  const isInCart = cart.publications.some(
-    (item) => item.id === publication.id
-  );
-
-
+  const isInCart = cart.publications.some((item) => item.id === publication.id);
 
   return (
-    <StyledContainer>
-      <Grid container>
-        <Grid item xs={12} md={6} className="image-wrapper">
-          <img src={publication.book?.image} alt={publication.book?.title} />
-          <br />
-          <Typography variant="h6" color="secondary">
-            Auteur: <b>{publication.book?.author}</b>
-          </Typography>
-          Commentaire:
-          <Typography
-            variant="p"
-            dangerouslySetInnerHTML={{ __html: publication.comment }}
-          />
+    <>
+    <Header />
+      <StyledContainer>
+        <Grid container>
+          <Grid item xs={12} md={6} className="image-wrapper">
+            <img src={publication.book?.image} alt={publication.book?.title} />
+            <br />
+            <Typography variant="h6" color="secondary">
+              Auteur: <b>{publication.book?.author}</b>
+            </Typography>
+            Commentaire:
+            <Typography
+              variant="p"
+              dangerouslySetInnerHTML={{ __html: publication.comment }}
+            />
+          </Grid>
+          <Grid item xs={12} md={5} className="text">
+            <Typography variant="h2">
+              <b>{publication.book?.title}</b>
+            </Typography>
+            <Typography
+              variant="p"
+              dangerouslySetInnerHTML={{
+                __html: publication.book?.description,
+              }}
+            />
+            <Typography variant="h3" color="secondary">
+              Price: <b>{publication.book?.price}</b>
+            </Typography>
+            <br />
+            <div className="button-group">
+              <button
+                disabled={isInCart}
+                className="custom-button"
+                onClick={handleClick}
+              >
+                <ShoppingCartIcon /> Add to Cart
+              </button>
+              <button className="custom-button">
+                <MailIcon /> Echanger
+              </button>
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={5} className="text">
-          <Typography variant="h2">
-            <b>{publication.book?.title}</b>
-          </Typography>
-          <Typography
-            variant="p"
-            dangerouslySetInnerHTML={{ __html: publication.book?.description }}
-          />
-          <Typography variant="h3" color="secondary">
-            Price: <b>{publication.book?.price}</b>
-          </Typography>
-          <br />
-          <div className="button-group">
-            <button disabled={isInCart} className="custom-button" onClick={handleClick}>
-              <ShoppingCartIcon /> Add to Cart
-            </button>
-            <button className="custom-button">
-              <MailIcon /> Echanger
-            </button>
-          </div>
-        </Grid>
-      </Grid>
-    </StyledContainer>
+      </StyledContainer>
+      <Footer/>
+    </>
   );
 };
 

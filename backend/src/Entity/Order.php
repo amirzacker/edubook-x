@@ -35,17 +35,22 @@ class Order
     private array $publications = [];
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["getPublication"])]
+    #[Groups(["getOrder"])]
     private \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(["getPublication"])]
+    #[Groups(["getOrder"])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["getOrder"])]
     private ?string $status = null;
 
-
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

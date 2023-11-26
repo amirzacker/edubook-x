@@ -1,20 +1,27 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined, Person } from "@material-ui/icons";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../../toolkit/responsive";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import logo from "./logo.png";
-import "./Header.css";
+import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/apiCalls";
 
 const Container = styled.div`
-  height: 60px;
+  height: 80px;
+  background: teal;
+  color: white;
+  position: fixe;
   ${mobile({ height: "50px" })}
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
+  padding: 0px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,6 +55,7 @@ const Input = styled.input`
 
 const Center = styled.div`
   display: contents;
+  cursor: pointer;
 `;
 
 const Logo = styled.h1`
@@ -64,14 +72,34 @@ const Right = styled.div`
 
 const MenuItem = styled.div`
   font-size: 14px;
+  color: white;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const Link = styled.a`
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+`;
+const LogoImage = styled.img`
+  max-width: 50px;
+  height: auto;
+  margin-right: 20px;
+`;
+
 const Header = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    logout(dispatch);
+    navigate("/login"); // Rediriger vers la page de connexion après la déconnexion
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -79,31 +107,39 @@ const Header = () => {
           <Language>FR</Language>
           <SearchContainer>
             <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
+            <Search style={{ fontSize: 20 }} />
           </SearchContainer>
         </Left>
-        <Center>
-          <Logo>EduBookX.</Logo>
-          <Link to="/">
-            <img src={logo} className="logo" alt="Logo" />
+        <Center onClick={() => navigate("/")}>
+          <Logo>EduBookX</Logo>
+          <Link>
+            <LogoImage src={logo} className="logo" alt="Logo" />
           </Link>
         </Center>
         <Right>
           {user ? (
-            <Link to="/dasboard">
-              <Person />
-            </Link>
+            <>
+              <Link onClick={() => navigate("/dashboard")}>
+                <Person />
+              </Link>
+              <Link onClick={handleLogout}>
+                <ExitToAppIcon style={{ marginLeft: 35 }} />
+              </Link>
+            </>
           ) : (
-            <Link to="/register">
-              <MenuItem>LOGIN UP</MenuItem>
-            </Link>
+            <>
+              <Link onClick={() => navigate("/register")}>
+                <MenuItem>LOGIN UP</MenuItem>
+              </Link>
+              <Link onClick={() => navigate("/login")}>
+                <MenuItem>LOGIN IN</MenuItem>
+              </Link>
+            </>
           )}
-          <Link to="/login">
-            <MenuItem>LOGIN IN</MenuItem>
-          </Link>
-          <Link to="/cart">
+
+          <Link onClick={() => navigate("/cart")}>
             <MenuItem>
-              <Badge badgeContent={quantity} color="primary">
+              <Badge badgeContent={quantity} color="secondary">
                 <ShoppingCartOutlined />
               </Badge>
             </MenuItem>

@@ -6,22 +6,22 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Success from "./pagesNg/Success";
+import Success from "./pages/Success";
 import { useSelector } from "react-redux";
-import Login from "./pagesNg/Login";
-import Register from "./pagesNg/Register";
-import Cart from "./pagesNg/Cart";
-import Messenger from "./pagesNg/messenger/Messenger";
-import Dashboard from "./componentsNg/Dashboard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Cart from "./pages/Cart";
+import Messenger from "./pages/messenger/Messenger";
+import Dashboard from "./components/Dashboard";
 import { Public } from "@material-ui/icons";
-import PublicationList from "./pagesNg/publication/PublicationList";
-import Publication from "./pagesNg/publication/Publication";
-import NewPublication from "./componentsNg/publication/NewPublication";
-import EditPublication from "./componentsNg/publication/EditPublication";
-import Profile from "./pagesNg/dashboard/Profile";
-import Publications from "./pagesNg/dashboard/MyPublications";
-import Home from "./pagesNg/Home";
-import NotFoundPage from "./pagesNg/NotFoundPage";
+import PublicationList from "./pages/publication/PublicationList";
+import Publication from "./pages/publication/Publication";
+import NewPublication from "./components/publication/NewPublication";
+import EditPublication from "./components/publication/EditPublication";
+import Profile from "./pages/dashboard/Profile";
+import Publications from "./pages/dashboard/MyPublications";
+import Home from "./pages/Home";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.user.currentUser);
@@ -38,12 +38,7 @@ function App() {
     <Router>
       <Routes>
         {/* Les routes sans AppLayout */}
-        <Route
-          path="/"
-          element={
-              <Home />
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/success" element={<Success />} />
         <Route
           path="/register"
@@ -53,20 +48,10 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route
-          path="/publications"
-          element={
-              <PublicationList />
-          }
-        />
-        <Route
-          path="/publications/:publicationId"
-          element={
-              <Publication />
-          }
-        />
+        <Route path="/publications" element={<PublicationList />} />
+        <Route path="/publications/:publicationId" element={<Publication />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />}/>
+        <Route path="/login" element={<Login />} />
 
         {/* Les routes avec AppLayout */}
 
