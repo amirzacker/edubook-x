@@ -18,6 +18,7 @@ import PublicationList from "./pagesNg/publication/PublicationList";
 import Publication from "./pagesNg/publication/Publication";
 import NewPublication from "./componentsNg/publication/NewPublication";
 import EditPublication from "./componentsNg/publication/EditPublication";
+import DetailPublication from "./componentsNg/publication/DetailPublication";
 import Profile from "./pagesNg/dashboard/Profile";
 import Publications from "./pagesNg/dashboard/MyPublications";
 import Home from "./pagesNg/Home";
@@ -38,12 +39,7 @@ function App() {
     <Router>
       <Routes>
         {/* Les routes sans AppLayout */}
-        <Route
-          path="/"
-          element={
-              <Home />
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/success" element={<Success />} />
         <Route
           path="/register"
@@ -53,20 +49,10 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route
-          path="/publications"
-          element={
-              <PublicationList />
-          }
-        />
-        <Route
-          path="/publications/:publicationId"
-          element={
-              <Publication />
-          }
-        />
+        <Route path="/publications" element={<PublicationList />} />
+        <Route path="/publications/:publicationId" element={<Publication />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />}/>
+        <Route path="/login" element={<Login />} />
 
         {/* Les routes avec AppLayout */}
 
@@ -84,6 +70,10 @@ function App() {
           <Route
             path="/dashboard/publications/:publicationId"
             element={<EditPublication />}
+          />
+          <Route
+            path="/dashboard/publications/detail/:publicationId"
+            element={<DetailPublication />}
           />
           <Route
             path="/dashboard/publications/new"
