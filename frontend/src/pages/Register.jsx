@@ -6,10 +6,12 @@ import { register, login } from "../redux/apiCalls";
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
+import Footer from "../components/Footer";
+import logo from "../components/header/logo.png";
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 80vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
@@ -32,6 +34,9 @@ const Wrapper = styled.div`
   padding: 20px;
   background-color: white;
   ${mobile({ width: "75%" })}
+  border-radius: 8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 `;
 
 const Title = styled.h1`
@@ -63,6 +68,12 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+`;
+
+const LogoImage = styled.img`
+  max-width: 50px;
+  height: auto;
+  margin-right: 20px;
 `;
 
 const Register = () => {
@@ -120,6 +131,7 @@ const Register = () => {
       <Container>
         <Wrapper>
           <Title>CREATE AN ACCOUNT</Title>
+          <LogoImage src={logo} className="logo" alt="Logo" />
           <Link onClick={goToLogin}>Do You a account LOGIN</Link>
           <Form onSubmit={handleSubmit}>
             <Input
@@ -163,6 +175,7 @@ const Register = () => {
           {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
         </Wrapper>
       </Container>
+      <Footer/>
     </>
   );
 };

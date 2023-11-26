@@ -13,7 +13,6 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Messenger from "./pages/messenger/Messenger";
 import Dashboard from "./components/Dashboard";
-import { Public } from "@material-ui/icons";
 import PublicationList from "./pages/publication/PublicationList";
 import Publication from "./pages/publication/Publication";
 import NewPublication from "./components/publication/NewPublication";

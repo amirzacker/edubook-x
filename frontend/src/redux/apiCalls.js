@@ -27,18 +27,17 @@ import {
   addPublicationSuccess,
 } from "./publicationRedux";
 
-export const login = async (dispatch, user, onSuccess) => {
+export const login = async (dispatch, user, callback) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/login_check", user);
     dispatch(loginSuccess(res.data));
-    if (onSuccess) {
-      onSuccess(); // Appeler le callback en cas de succès
-    }
+    if (callback) callback(); // Redirection après la connexion réussie
   } catch (err) {
     dispatch(loginFailure());
   }
 };
+
 
 export const refreshToken = async (dispatch) => {
   const user = JSON.parse(localStorage.getItem("persist:root"))?.user;

@@ -2,7 +2,6 @@ import { Remove } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { mobile } from "../toolkit/responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import { removePublication } from "../redux/cartRedux";
-import { colors } from "@material-ui/core";
 
 const Container = styled.div``;
 
@@ -137,10 +135,9 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser); // Obtenir l'état de connexion de l'utilisateur
   const KEY = process.env.REACT_APP_STRIPE;
 
-  console.log(KEY);
-  console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -149,22 +146,32 @@ const Cart = () => {
     setStripeToken(token);
   };
 
+  const handleOrderClick = () => {
+    if (!user) {
+      // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+      navigate("/login", { state: { from: "/cart" } });
+    }
+  };
+
   useEffect(() => {
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/payment", {
-          stripeToken: stripeToken.id,
+          tokenId: stripeToken.id,
           amount: cart.total,
         });
-        console.log(stripeToken);
         navigate("/success", {
           stripeData: res.data,
           publications: cart,
         });
-      } catch {}
+      } catch (error) {
+        console.error("Error during the payment process", error);
+      }
     };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart, navigate]);
+    if (stripeToken && user) {
+      makeRequest();
+    }
+  }, [stripeToken, cart, navigate, user]);
 
   const handleRemove = (publication) => {
     dispatch(removePublication(publication));
@@ -175,40 +182,59 @@ const Cart = () => {
       <Header />
       <Wrapper>
         <Top>
-          <TopButton onClick={()=> navigate('/publications')} >CONTINUER SUR EDUBOOK</TopButton>
-          <TopButton type="filled">Commander</TopButton>
+          {
+            (cart.publications && cart.publications.length > 0 ? (
+              <TopButton onClick={() => navigate("/publications")}>
+              CONTINUER SUR EDUBOOK
+            </TopButton>
+            ) : (
+             ""
+            ))
+          }
+          <TopButton type="filled" onClick={handleOrderClick}>Commander</TopButton>
         </Top>
         <Bottom>
-          <Info>
-            {cart?.publications?.map((publication) => (
-              <Product>
-                <ProductDetail>
-                  <Image src={publication.book.image} />
-                  <Details>
-                    <BookTitle>
-                      <b>Livre:</b> {publication.book.title}
-                    </BookTitle>
-                    <Author>
-                      <b>Auteur:</b> {publication.book.author}
-                    </Author>
-                    <PublicationType>
-                      <b>Type:</b> {publication.book_state}
-                    </PublicationType>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Remove
-                      style={{ cursor: "pointer", color: "red" }}
-                      onClick={() => handleRemove(publication)}
-                    />
-                  </ProductAmountContainer>
-                  <BookPrice>$ {publication.price}</BookPrice>
-                </PriceDetail>
-              </Product>
-            ))}
-            <Hr />
-          </Info>
+          {
+            (cart.publications && cart.publications.length > 0 ? (
+              <Info>
+                {cart?.publications?.map((publication) => (
+                  <Product>
+                    <ProductDetail>
+                      <Image src={publication.book.image} />
+                      <Details>
+                        <BookTitle>
+                          <b>Livre:</b> {publication.book.title}
+                        </BookTitle>
+                        <Author>
+                          <b>Auteur:</b> {publication.book.author}
+                        </Author>
+                        <PublicationType>
+                          <b>Type:</b> {publication.book_state}
+                        </PublicationType>
+                      </Details>
+                    </ProductDetail>
+                    <PriceDetail>
+                      <ProductAmountContainer>
+                        <Remove
+                          style={{ cursor: "pointer", color: "red" }}
+                          onClick={() => handleRemove(publication)}
+                        />
+                      </ProductAmountContainer>
+                      <BookPrice>$ {publication.price}</BookPrice>
+                    </PriceDetail>
+                  </Product>
+                ))}
+                <Hr />
+              </Info>
+            ) : (
+              <Info>
+                <SummaryTitle>Votre panier est vide</SummaryTitle>
+                <TopButton onClick={() => navigate("/publications")}>
+                  CONTINUER SUR EDUBOOK
+                </TopButton>
+              </Info>
+            ))
+          }
           <Summary>
             <SummaryTitle>RECAPITULATIF</SummaryTitle>
             {cart?.publications?.map((publication) => (
@@ -221,18 +247,22 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="Edubook-X"
-              image="https://akshatbookstore.netlify.app/static/media/circles.0e0f82e29821aa79cbd5.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>COMMANDER MAINTENANT</Button>
-            </StripeCheckout>
+            {user ? (
+                <StripeCheckout
+                name="Edubook-X"
+                image="https://akshatbookstore.netlify.app/static/media/circles.0e0f82e29821aa79cbd5.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is $${cart.total}`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button>COMMANDER MAINTENANT</Button>
+              </StripeCheckout>
+            ) : (
+              <Button onClick={handleOrderClick}>COMMANDER MAINTENANT</Button>
+            )}
           </Summary>
         </Bottom>
       </Wrapper>

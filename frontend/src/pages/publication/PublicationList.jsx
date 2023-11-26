@@ -2,16 +2,13 @@ import styled from "styled-components";
 import Publications from "../../components/Publications";
 import Footer from "../../components/Footer";
 import { mobile } from "../../toolkit/responsive";
-import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import { publicRequest } from "../../toolkit/requestMethods";
 
 const Container = styled.div``;
 
-const Title = styled.h1`
-  margin: 20px;
-`;
+
 
 const FilterContainer = styled.div`
   display: flex;
