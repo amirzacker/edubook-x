@@ -1,5 +1,5 @@
-import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { Badge } from "@material-ui/core"; 
+import { Search, ShoppingCartOutlined, Person } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../toolkit/responsive";
@@ -69,7 +69,7 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
-  const quantity = useSelector((state) => state.cart.quantity);
+  const quantity = useSelector((state) => state.cart.quantity); 
   return (
     <Container>
       <Wrapper>
@@ -84,8 +84,20 @@ const Navbar = () => {
           <Logo>LAMA.</Logo>
         </Center>
         <Right>
+
+    
+            <Link to="/register">
+              <MenuItem>REGISTER</MenuItem>
+            </Link>
+        
+          <Link to="/login">
+            <MenuItem>LOGIN IN</MenuItem>
+          </Link>
+
+
+{/* 
           <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          <MenuItem>SIGN IN</MenuItem> */}
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
