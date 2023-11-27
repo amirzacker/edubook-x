@@ -20,7 +20,7 @@ class OrderController extends AbstractController
     public function getAll(OrderRepository $orderRepository, SerializerInterface $serializer): JsonResponse
     {
         $orders = $orderRepository->findAll();
-        $jsonOrders = $serializer->serialize($orders, 'json');
+        $jsonOrders = $serializer->serialize($orders, 'json', ["groups" => "getOrder"]);
         return new JsonResponse($jsonOrders, Response::HTTP_OK, [], true);
     }
 

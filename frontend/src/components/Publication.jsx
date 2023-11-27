@@ -82,7 +82,6 @@ const Publication = ({ item }) => {
   const cart = useSelector((state) => state.cart);
   
   const isInCart = cart.publications.some((it) => it.id === item.id);
-  console.log(isInCart);
 
   return (
     <Container >

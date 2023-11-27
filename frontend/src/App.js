@@ -21,6 +21,7 @@ import Profile from "./pages/dashboard/Profile";
 import Publications from "./pages/dashboard/MyPublications";
 import Home from "./pages/Home";
 import NotFoundPage from "./pages/NotFoundPage";
+import MyOrders from "./pages/dashboard/MyOrders";
 
 const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.user.currentUser);
@@ -65,6 +66,7 @@ function App() {
           <Route path="/dashboard/messenger" element={<Messenger />} />
           {/* <Route path="/dashboard/publications" element={<PublicationList />} /> */}
           <Route path="/dashboard/publications" element={<Publications />} />
+          <Route path="/dashboard/orders" element={<MyOrders />} />
           <Route
             path="/dashboard/publications/:publicationId"
             element={<EditPublication />}

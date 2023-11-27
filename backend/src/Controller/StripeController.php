@@ -21,14 +21,14 @@ class StripeController extends AbstractController
         Stripe\Stripe::setApiKey($_SERVER["STRIPE_SECRET"]);
 
         try {
-            Stripe\Charge::create([
+            $charge = Stripe\Charge::create([
                 "amount" => $amount * 100, // Les montants sont en centimes
                 "currency" => "eur", // Utiliser 'eur' pour les euros
                 "source" => $token,
                 "description" => "Payment Test",
             ]);
 
-            return $this->json(['message' => 'Payment Successful!']);
+            return $this->json($charge); 
         } catch (\Exception $e) {
             return $this->json(['message' => $e->getMessage()], 400);
         }

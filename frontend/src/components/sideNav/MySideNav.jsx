@@ -9,6 +9,7 @@ import "./MySideNav.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/apiCalls";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
@@ -58,6 +59,12 @@ const MySideNav = ({ setSidebarOpen, sidebaropen }) => {
             <BookIcon />
           </NavIcon>
           <NavText>Liste de Publications</NavText>
+        </NavItem>
+        <NavItem eventKey="orders">
+          <NavIcon className="nav-item-icon">
+            <ShoppingCartIcon />
+          </NavIcon>
+          <NavText>Mes Commandes</NavText>
         </NavItem>
         <NavItem eventKey="profile">
           <NavIcon>

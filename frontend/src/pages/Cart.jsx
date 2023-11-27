@@ -157,13 +157,15 @@ const Cart = () => {
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/payment", {
-          tokenId: stripeToken.id,
-          amount: cart.total,
+          stripeToken: stripeToken.id,
+          amount: cart.total ?? 1,
         });
         navigate("/success", {
-          stripeData: res.data,
-          publications: cart,
-        });
+          state: {
+            stripeData: res.data,
+            cart: cart,
+          },
+        });        
       } catch (error) {
         console.error("Error during the payment process", error);
       }
@@ -191,14 +193,13 @@ const Cart = () => {
              ""
             ))
           }
-          <TopButton type="filled" onClick={handleOrderClick}>Commander</TopButton>
         </Top>
         <Bottom>
           {
             (cart.publications && cart.publications.length > 0 ? (
               <Info>
                 {cart?.publications?.map((publication) => (
-                  <Product>
+                  <Product key={publication.id}>
                     <ProductDetail>
                       <Image src={publication.book.image} />
                       <Details>
@@ -238,7 +239,7 @@ const Cart = () => {
           <Summary>
             <SummaryTitle>RECAPITULATIF</SummaryTitle>
             {cart?.publications?.map((publication) => (
-              <SummaryItem>
+              <SummaryItem key={publication.id}>
                 <SummaryItemText>{publication?.book?.title}</SummaryItemText>
                 <SummaryItemPrice>$ {publication?.price}</SummaryItemPrice>
               </SummaryItem>
