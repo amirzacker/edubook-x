@@ -7,13 +7,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  height: 60px;
+  height-min: 60px; 
+   align-items: center; 
   ${mobile({ height: "50px" })}
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
-  display: flex;
+  padding: 0px 20px;
+  display: flex; 
   align-items: center;
   justify-content: space-between;
   ${mobile({ padding: "10px 0px" })}
@@ -32,17 +33,24 @@ const Language = styled.span`
 `;
 
 const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
+  height: 20px;
+  width:300px; 
   display: flex;
   align-items: center;
+   border: 1px solid #bbb;
+   border-radius: 25px;
   margin-left: 25px;
   padding: 5px;
 `;
 
 const Input = styled.input`
   border: none;
+  outline: none;
+  width:300px;
   ${mobile({ width: "50px" })}
 `;
+
+ 
 
 const Center = styled.div`
   flex: 1;
@@ -63,6 +71,7 @@ const Right = styled.div`
 
 const MenuItem = styled.div`
   font-size: 14px;
+  
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
@@ -74,30 +83,18 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
+          {/* <Language>EN</Language> */}
+         <Logo>LAMA.</Logo>
         </Left>
         <Center>
-          <Logo>LAMA.</Logo>
+            <SearchContainer>
+            <Input placeholder="Search" />
+            <Search style={{ color: "gray", fontSize: 20 }} />
+          </SearchContainer> 
         </Center>
         <Right>
 
     
-            <Link to="/register">
-              <MenuItem>REGISTER</MenuItem>
-            </Link>
-        
-          <Link to="/login">
-            <MenuItem>LOGIN IN</MenuItem>
-          </Link>
-
-
-{/* 
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem> */}
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
