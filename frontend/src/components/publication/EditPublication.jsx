@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Publish } from "@material-ui/icons";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updatePublication } from "../../redux/apiCalls";
 import "./publication.css";
 import { userRequest } from "../../toolkit/requestMethods";
@@ -77,9 +77,6 @@ const EditPublication = () => {
     }
   };
 
-  const handleBack = () => {
-    navigate(-1); // Cela ramènera l'utilisateur à la page précédente
-  };
 
   return (
     <div className="publication">
