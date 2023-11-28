@@ -23,8 +23,13 @@ const cartSlice = createSlice({
         state.publications.splice(index, 1);
       }
     },
+    removeAllPublications: (state) => {
+      state.publications = [];
+      state.total = 0;
+      state.quantity = 0;
+    },
   },
 });
 
-export const { addPublication, removePublication } = cartSlice.actions;
+export const { addPublication, removePublication, removeAllPublications} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -3,8 +3,10 @@ import {
 } from "@material-ui/icons";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import MailIcon from '@material-ui/icons/Mail';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { addPublication } from "../redux/cartRedux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Info = styled.div`
   opacity: 0;
@@ -68,17 +70,25 @@ const Icon = styled.div`
 `;
 
 const Publication = ({ item }) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const PublicationDetail = () => {
-    navigate(`/publications/${item.id}`);
+
+  const handleClick = () => {
+    if (!isInCart) {
+      dispatch(addPublication({ ...item }));
+    }
   };
+  
+  const cart = useSelector((state) => state.cart);
+  
+  const isInCart = cart.publications.some((it) => it.id === item.id);
+
   return (
-    <Container onClick={PublicationDetail}>
+    <Container >
       <Circle />
       <Image src={item.book?.image} />
       <Info>
-        <Icon>
+        <Icon onClick={handleClick}>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>

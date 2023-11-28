@@ -45,6 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getAllmessage", "getPublication", "getConversation", "getUser", "getOrder"])]
     private ?string $lastname = null;
 
     public function __construct()

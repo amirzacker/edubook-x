@@ -108,4 +108,18 @@ class PublicationController extends AbstractController
         return new JsonResponse($jsonPublications, Response::HTTP_OK, [], true);
     }
 
+    #[Route('/publications/category/{categoryId}', name: 'publication.getByCategory', methods: ['GET'])]
+    public function getPublicationsByCategory(int $categoryId, PublicationRepository $publicationRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $publications = $publicationRepository->findByCategory($categoryId);
+
+        if (empty($publications)) {
+            return $this->json(['message' => 'No publications found for this category'], Response::HTTP_NOT_FOUND);
+        }
+
+        $jsonPublications = $serializer->serialize($publications, 'json', ["groups" => "getPublication"]);
+        return new JsonResponse($jsonPublications, Response::HTTP_OK, [], true);
+    }
+
+
 }

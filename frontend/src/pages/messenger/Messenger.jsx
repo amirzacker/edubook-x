@@ -1,6 +1,6 @@
 import "./messenger.css";
-import Conversation from "../../componentsNg/Conversation";
-import Message from "../../componentsNg/Message";
+import Conversation from "../../components/Conversation";
+import Message from "../../components/Message";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import SendIcon from "@material-ui/icons/Send";
@@ -11,9 +11,9 @@ const Messenger = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const user = useSelector((state) => state.user.currentUser);
   const scrollRef = useRef();
   const [activeConversation, setActiveConversation] = useState(null);
+  const { user } = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -45,18 +45,19 @@ const Messenger = () => {
 
   useEffect(() => {
     if (currentChat) {
-      const eventSource = new EventSource(`http://localhost:80/.well-known/mercure?topic=conversation/${currentChat.id}`);
-      eventSource.onmessage = event => {
+      const eventSource = new EventSource(
+        `http://localhost:80/.well-known/mercure?topic=conversation/${currentChat.id}`
+      );
+      eventSource.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        setMessages(prevMessages => [...prevMessages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
       };
-  
+
       return () => {
         eventSource.close();
       };
     }
   }, [currentChat]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

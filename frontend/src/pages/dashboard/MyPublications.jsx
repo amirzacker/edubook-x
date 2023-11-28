@@ -4,9 +4,10 @@ import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePublication, getPublications } from "../../redux/apiCalls";
+import { deletePublication } from "../../redux/apiCalls";
 import Pagination from "@material-ui/lab/Pagination"; 
 import styled from "styled-components";
+import { publicRequest } from "../../toolkit/requestMethods";
 
 const PaginationContainer = styled.div`
   display: flex;
@@ -77,14 +78,22 @@ const DeleteButton = styled(DeleteOutline)`
 
 const Publications = () => {
   const dispatch = useDispatch();
-  const publications = useSelector((state) => state.publication.publications);
+  const [myMublications, setMyMublications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  const pagesCount = Math.ceil(publications.length / itemsPerPage);
+  const itemsPerPage = 3;
+  const pagesCount = Math.ceil(myMublications.length / itemsPerPage);
+  const { user } = useSelector((state) => state.user.currentUser);
+
 
   useEffect(() => {
-    getPublications(dispatch);
-  }, [dispatch]);
+    const getPublications = async () => {
+      try {
+        const res = await publicRequest.get("publications/user/" + user.id );
+        setMyMublications(res.data);
+      } catch (err) {}
+    };
+    getPublications();
+  }, [user]);
 
   const handleDelete = (id) => {
     deletePublication(id, dispatch);
@@ -96,7 +105,7 @@ const Publications = () => {
   // Calculer les rangs pour la pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = publications.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = myMublications.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <>

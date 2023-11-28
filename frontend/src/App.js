@@ -6,23 +6,25 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Success from "./pagesNg/Success";
+import Success from "./pages/Success";
 import { useSelector } from "react-redux";
-import Login from "./pagesNg/Login";
-import Register from "./pagesNg/Register";
-import Cart from "./pagesNg/Cart";
-import Messenger from "./pagesNg/messenger/Messenger";
-import Dashboard from "./componentsNg/Dashboard";
-import { Public } from "@material-ui/icons";
-import PublicationList from "./pagesNg/publication/PublicationList";
-import Publication from "./pagesNg/publication/Publication";
-import NewPublication from "./componentsNg/publication/NewPublication";
-import EditPublication from "./componentsNg/publication/EditPublication";
-import DetailPublication from "./componentsNg/publication/DetailPublication";
-import Profile from "./pagesNg/dashboard/Profile";
-import Publications from "./pagesNg/dashboard/MyPublications";
-import Home from "./pagesNg/Home";
-import NotFoundPage from "./pagesNg/NotFoundPage";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Cart from "./pages/Cart";
+import Messenger from "./pages/messenger/Messenger";
+import Dashboard from "./components/Dashboard";
+import PublicationList from "./pages/publication/PublicationList";
+import Publication from "./pages/publication/Publication";
+import NewPublication from "./components/publication/NewPublication";
+import EditPublication from "./components/publication/EditPublication";
+import Profile from "./pages/dashboard/Profile";
+import Publications from "./pages/dashboard/MyPublications";
+import Home from "./pages/Home";
+import NotFoundPage from "./pages/NotFoundPage";
+import MyOrders from "./pages/dashboard/MyOrders";
+import DetailPublication from "./components/publication/DetailPublication";
+
 
 const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.user.currentUser);
@@ -67,6 +69,7 @@ function App() {
           <Route path="/dashboard/messenger" element={<Messenger />} />
           {/* <Route path="/dashboard/publications" element={<PublicationList />} /> */}
           <Route path="/dashboard/publications" element={<Publications />} />
+          <Route path="/dashboard/orders" element={<MyOrders />} />
           <Route
             path="/dashboard/publications/:publicationId"
             element={<EditPublication />}

@@ -1,16 +1,14 @@
 import { Remove } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Footer from "../componentsNg/Footer";
-import Navbar from "../componentsNg/Navbar";
+import Footer from "../components/Footer";
 import { mobile } from "../toolkit/responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
-import Header from "../componentsNg/header/Header";
+import Header from "../components/header/Header";
 import { removePublication } from "../redux/cartRedux";
-import { colors } from "@material-ui/core";
 
 const Container = styled.div``;
 
@@ -18,7 +16,6 @@ const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
-
 
 const Top = styled.div`
   display: flex;
@@ -50,7 +47,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   margin: 10px;
-  border-bottom: .1px solid grey;
+  border-bottom: 0.1px solid grey;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
 `;
@@ -138,10 +135,9 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser); // Obtenir l'état de connexion de l'utilisateur
   const KEY = process.env.REACT_APP_STRIPE;
 
-  console.log(KEY);
-  console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -150,69 +146,100 @@ const Cart = () => {
     setStripeToken(token);
   };
 
+  const handleOrderClick = () => {
+    if (!user) {
+      // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+      navigate("/login", { state: { from: "/cart" } });
+    }
+  };
+
   useEffect(() => {
     const makeRequest = async () => {
       try {
         const res = await userRequest.post("/payment", {
           stripeToken: stripeToken.id,
-          amount: 500,
+          amount: cart.total ?? 1,
         });
-        console.log(stripeToken);
         navigate("/success", {
-          stripeData: res.data,
-          publications: cart,
-        });
-      } catch {}
+          state: {
+            stripeData: res.data,
+            cart: cart,
+          },
+        });        
+      } catch (error) {
+        console.error("Error during the payment process", error);
+      }
     };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart.total, navigate]);
+    if (stripeToken && user) {
+      makeRequest();
+    }
+  }, [stripeToken, cart, navigate, user]);
 
   const handleRemove = (publication) => {
     dispatch(removePublication(publication));
   };
 
-  
-
   return (
     <Container>
-      <Header/>
+      <Header />
       <Wrapper>
         <Top>
-          <TopButton>CONTINUER SUR EDUBOOK</TopButton>
-          <TopButton type="filled">Commander</TopButton>
+          {
+            (cart.publications && cart.publications.length > 0 ? (
+              <TopButton onClick={() => navigate("/publications")}>
+              CONTINUER SUR EDUBOOK
+            </TopButton>
+            ) : (
+             ""
+            ))
+          }
         </Top>
         <Bottom>
-          <Info>
-            {cart?.publications?.map((publication) => (
-              <Product>
-                <ProductDetail>
-                  <Image src={publication.book.image} />
-                  <Details>
-                    <BookTitle>
-                      <b>Livre:</b> {publication.book.title}
-                    </BookTitle>
-                    <Author>
-                      <b>Auteur:</b> {publication.book.author}
-                    </Author>
-                    <PublicationType>
-                      <b>Type:</b> {publication.book_state}
-                    </PublicationType>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Remove style={{cursor: "pointer", color: "red"}}  onClick={() => handleRemove(publication)} />
-                  </ProductAmountContainer>
-                  <BookPrice>$ {publication.price}</BookPrice>
-                </PriceDetail>
-              </Product>
-            ))}
-            <Hr />
-          </Info>
+          {
+            (cart.publications && cart.publications.length > 0 ? (
+              <Info>
+                {cart?.publications?.map((publication) => (
+                  <Product key={publication.id}>
+                    <ProductDetail>
+                      <Image src={publication.book.image} />
+                      <Details>
+                        <BookTitle>
+                          <b>Livre:</b> {publication.book.title}
+                        </BookTitle>
+                        <Author>
+                          <b>Auteur:</b> {publication.book.author}
+                        </Author>
+                        <PublicationType>
+                          <b>Type:</b> {publication.book_state}
+                        </PublicationType>
+                      </Details>
+                    </ProductDetail>
+                    <PriceDetail>
+                      <ProductAmountContainer>
+                        <Remove
+                          style={{ cursor: "pointer", color: "red" }}
+                          onClick={() => handleRemove(publication)}
+                        />
+                      </ProductAmountContainer>
+                      <BookPrice>$ {publication.price}</BookPrice>
+                    </PriceDetail>
+                  </Product>
+                ))}
+                <Hr />
+              </Info>
+            ) : (
+              <Info>
+                <SummaryTitle>Votre panier est vide</SummaryTitle>
+                <TopButton onClick={() => navigate("/publications")}>
+                  CONTINUER SUR EDUBOOK
+                </TopButton>
+              </Info>
+            ))
+          }
           <Summary>
             <SummaryTitle>RECAPITULATIF</SummaryTitle>
             {cart?.publications?.map((publication) => (
-              <SummaryItem>
+              <SummaryItem key={publication.id}>
                 <SummaryItemText>{publication?.book?.title}</SummaryItemText>
                 <SummaryItemPrice>$ {publication?.price}</SummaryItemPrice>
               </SummaryItem>
@@ -221,18 +248,22 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="Edubook-X"
-              image="https://avatars.githubusercontent.com/u/1486366?v=4"
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>COMMANDER MAINTENANT</Button>
-            </StripeCheckout>
+            {user ? (
+                <StripeCheckout
+                name="Edubook-X"
+                image="https://akshatbookstore.netlify.app/static/media/circles.0e0f82e29821aa79cbd5.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is $${cart.total}`}
+                amount={cart.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+              >
+                <Button>COMMANDER MAINTENANT</Button>
+              </StripeCheckout>
+            ) : (
+              <Button onClick={handleOrderClick}>COMMANDER MAINTENANT</Button>
+            )}
           </Summary>
         </Bottom>
       </Wrapper>
