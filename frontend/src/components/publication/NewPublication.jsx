@@ -1,6 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
 import "./publication.css";
-import { Publish, Book } from "@material-ui/icons";
+import { Publish } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { userRequest } from "../../toolkit/requestMethods";

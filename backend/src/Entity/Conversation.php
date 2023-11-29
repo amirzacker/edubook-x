@@ -34,6 +34,10 @@ class Conversation
     #[Groups(["getConversation"])]
     private Collection $members;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(["getConversation"])]
+    private ?int $publicationId = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -122,6 +126,18 @@ class Conversation
     public function removeMember(User $member): static
     {
         $this->members->removeElement($member);
+
+        return $this;
+    }
+
+    public function getPublicationId(): ?int
+    {
+        return $this->publicationId;
+    }
+
+    public function setPublicationId(?int $publicationId): static
+    {
+        $this->publicationId = $publicationId;
 
         return $this;
     }
