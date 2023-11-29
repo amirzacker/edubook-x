@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
-import { useParams } from "react-router-dom";
-import { publicRequest } from "../../toolkit/requestMethods";
+import { useNavigate, useParams } from "react-router-dom";
+import { publicRequest, userRequest } from "../../toolkit/requestMethods";
 import styled from "styled-components";
 import { mobile } from "../../toolkit/responsive";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
@@ -77,7 +77,8 @@ const Publication = () => {
   const { publicationId } = useParams();
   const [publication, setPublication] = useState({});
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const {user} = useSelector((state) => state.user?.currentUser) || {};
   useEffect(() => {
     const getPublication = async () => {
       try {
@@ -103,6 +104,46 @@ const Publication = () => {
   const cart = useSelector((state) => state.cart);
 
   const isInCart = cart.publications.some((item) => item.id === publication.id);
+
+  const handleExchange = async () => {
+    if (!user) {
+      navigateToLogin();
+      return;
+    }
+
+    if (user.id === publication?.user.id) {
+      alert("Vous ne pouvez pas créer une conversation avec vous-même.");
+      return;
+    }
+
+    try {
+      const exists = await checkConversationExists();
+      if (!exists) {
+        await createNewConversation();
+      }
+      navigate('/dashboard/messenger');
+    } catch (error) {
+      console.error("Erreur:", error);
+    }
+  };
+
+  const navigateToLogin = () => {
+    navigate("/login", { state: { from: `/publications/${publicationId}` } });
+  };
+
+  const checkConversationExists = async () => {
+    const response = await userRequest.get(`/conversations/find/${user.id}/${publication?.user?.id}`);
+    return response.data;
+  };
+console.log(publication);
+  const createNewConversation = async () => {
+    const data = {
+      senderId: user.id,
+      receiverId: publication.user.id,
+      publicationId: publication.id
+    };
+    await userRequest.post("/conversations/new", data);
+  };
 
   return (
     <>
@@ -143,7 +184,7 @@ const Publication = () => {
               >
                 <ShoppingCartIcon /> Add to Cart
               </button>
-              <button className="custom-button">
+              <button className="custom-button" onClick={handleExchange}>
                 <MailIcon /> Echanger
               </button>
             </div>

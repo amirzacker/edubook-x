@@ -101,7 +101,7 @@ const Login = () => {
       <Header/>
       <Container>
         <Wrapper>
-          <Title>SIGN IN</Title>
+          <Title>CONNEXION</Title>
           <LogoImage src={logo} className="logo" alt="Logo" />
           <Form>
             <Input
@@ -116,9 +116,9 @@ const Login = () => {
             <Button onClick={handleClick} disabled={isFetching}>
               LOGIN
             </Button>
-            {error && <Error>Something went wrong...</Error>}
-            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-            <Link onClick={goToRegister}>CREATE A NEW ACCOUNT</Link>
+            {error && <Error>Nom d'utilisateur ou mot de passe incorrect.</Error>}
+            <Link>VOUS AVEZ OUBLIÉ VOTRE MOT DE PASSE ?</Link>
+            <Link onClick={goToRegister}>CRÉER UN NOUVEAU COMPTE</Link>
           </Form>
         </Wrapper>
       </Container>

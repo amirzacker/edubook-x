@@ -129,10 +129,10 @@ const Header = () => {
           ) : (
             <>
               <Link onClick={() => navigate("/register")}>
-                <MenuItem>LOGIN UP</MenuItem>
+                <MenuItem>S'INSCRIRE</MenuItem>
               </Link>
               <Link onClick={() => navigate("/login")}>
-                <MenuItem>LOGIN IN</MenuItem>
+                <MenuItem>SE CONNECTER</MenuItem>
               </Link>
             </>
           )}
