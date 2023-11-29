@@ -5,22 +5,23 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import SendIcon from "@material-ui/icons/Send";
 import { userRequest } from "../../toolkit/requestMethods";
+import { useNavigate } from "react-router-dom";
 
 const Messenger = () => {
   const [conversations, setConversations] = useState([]);
+  const [publication, setPublication] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const scrollRef = useRef();
   const [activeConversation, setActiveConversation] = useState(null);
   const { user } = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await userRequest.get(
-          "conversations/user/" + user?.user?.id
-        );
+        const res = await userRequest.get("conversations/user/" + user?.id);
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -28,6 +29,19 @@ const Messenger = () => {
     };
     getConversations();
   }, [user]);
+
+  useEffect(() => {
+    const getPublication = async () => {
+      try {
+        const res = await userRequest.get("publications/" + currentChat?.publicationId);
+        setPublication(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getPublication();
+  }, [currentChat?.publicationId]);
+
 
   useEffect(() => {
     const getMessages = async () => {
@@ -62,7 +76,7 @@ const Messenger = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-      sender: user?.user?.id,
+      sender: user?.id,
       text: newMessage,
       conversationId: currentChat.id,
     };
@@ -87,6 +101,12 @@ const Messenger = () => {
     }
   };
 
+  const handlePublicationClick = () => {
+    if (currentChat && currentChat?.publicationId) {
+      navigate(`/publications/${currentChat?.publicationId}`);
+    }
+  };
+
   return (
     <>
       <main>
@@ -104,7 +124,7 @@ const Messenger = () => {
                   <Conversation
                     key={i}
                     conversation={c}
-                    currentUser={user?.user}
+                    currentUser={user}
                     isActive={c.id === activeConversation}
                   />
                 </div>
@@ -116,12 +136,23 @@ const Messenger = () => {
               {currentChat ? (
                 <>
                   <div className="chatBoxTop">
+                    <div
+                      className="publicationDetails"
+                      onClick={handlePublicationClick}
+                    >
+                      {currentChat && currentChat?.publicationId && (
+                        <>
+                          <h4>{publication?.book?.title}</h4>
+                          <p>Prix: {publication?.book?.price} €</p>
+                        </>
+                      )}
+                    </div>
                     {messages.map((m, i) => (
                       <div key={i} ref={scrollRef}>
                         <Message
                           key={i}
                           message={m}
-                          own={m.sender.id === user?.user?.id}
+                          own={m.sender.id === user?.id}
                         />
                       </div>
                     ))}

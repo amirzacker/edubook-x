@@ -92,12 +92,14 @@ const Publication = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <Link to={`/publications/${item.id}`}>
+          <Link to={`/publications/${item?.id}`}>
             <VisibilityIcon />
           </Link>
         </Icon>
         <Icon>
+        <Link to={`/publications/${item?.id}`}>
           <MailIcon />
+        </Link>
         </Icon>
       </Info>
     </Container>

@@ -22,7 +22,7 @@ const Publications = ({ cat, sort }) => {
   const [publications, setPublications] = useState([]);
   const [filteredPublications, setFilteredPublications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8; // Définissez ici le nombre d'articles par page
+  const itemsPerPage = 12; // Définissez ici le nombre d'articles par page
 
   useEffect(() => {
     const getPublications = async () => {

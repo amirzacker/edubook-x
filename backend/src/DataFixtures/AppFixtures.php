@@ -40,13 +40,14 @@ class AppFixtures extends Fixture
 
         // Création des livres
         $books = [];
+        $imageUrl = "https://1.bp.blogspot.com/_ukSju7PjaI4/TStEEIbC8qI/AAAAAAAAAzY/YiJYyvGMHVE/s320/ebook-about-how-to-write-an-ebook.jpg";
         foreach ($categories as $category) {
             for ($i = 0; $i < 5; $i++) {
                 $book = new Book();
                 $book->setTitle($faker->sentence)
                     ->setDescription($faker->paragraph)
                     ->setAuthor($faker->name)
-                    ->setImage($faker->imageUrl())
+                    ->setImage($imageUrl)
                     ->setCategory($category);
                 $book->setCreatedAtValue();
                 $manager->persist($book);

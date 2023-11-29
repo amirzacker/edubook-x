@@ -130,9 +130,9 @@ const Register = () => {
       <Header />
       <Container>
         <Wrapper>
-          <Title>CREATE AN ACCOUNT</Title>
+          <Title>CRÉER UN COMPTE</Title>
           <LogoImage src={logo} className="logo" alt="Logo" />
-          <Link onClick={goToLogin}>Do You a account LOGIN</Link>
+          <Link onClick={goToLogin}>Vous avez déjà un compte ? CONNECTEZ-VOUS</Link>
           <Form onSubmit={handleSubmit}>
             <Input
               name="firstname"
@@ -167,10 +167,9 @@ const Register = () => {
               onChange={handleInputChange}
             />
             <Agreement>
-              By creating an account, I consent to the processing of my personal
-              data in accordance with the <b>PRIVACY POLICY</b>
+            En créant un compte, je consens au traitement de mes données personnelles conformément à la <b>POLITIQUE DE CONFIDENTIALITÉ</b>
             </Agreement>
-            <Button type="submit">CREATE</Button>
+            <Button type="submit">CRÉER</Button>
           </Form>
           {errorMessage && <p style={{ color: "red" }}> {errorMessage}</p>}
         </Wrapper>
