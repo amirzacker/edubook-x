@@ -106,9 +106,12 @@ const Header = () => {
         <Left>
           <Language>FR</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input placeholder="Recherche..." />
             <Search style={{ fontSize: 20 }} />
           </SearchContainer>
+          <Link onClick={() => navigate("/")}>
+            <MenuItem>HOME</MenuItem>
+          </Link>
         </Left>
         <Center onClick={() => navigate("/")}>
           <Logo>EduBookX</Logo>
@@ -117,10 +120,13 @@ const Header = () => {
           </Link>
         </Center>
         <Right>
+          <Link onClick={() => navigate("/publications")}>
+            <MenuItem>PUBLICATIONS</MenuItem>
+          </Link>
           {user ? (
             <>
               <Link onClick={() => navigate("/dashboard")}>
-                <Person />
+                <Person style={{ marginLeft: 35 }} />
               </Link>
               <Link onClick={handleLogout}>
                 <ExitToAppIcon style={{ marginLeft: 35 }} />
