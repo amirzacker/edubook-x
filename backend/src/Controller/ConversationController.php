@@ -39,6 +39,7 @@ class ConversationController extends AbstractController
 
         $sender = $userRepository->find($data['senderId']);
         $receiver = $userRepository->find($data['receiverId']);
+        $publicationId = $data['publicationId'];
 
         
         $conversationRepository = $entityManager->getRepository(Conversation::class);
@@ -57,6 +58,7 @@ class ConversationController extends AbstractController
         // Adding User entities instead of ids
         $conversation->addMember($sender);
         $conversation->addMember($receiver);
+        $conversation->setPublicationId($publicationId);
         $conversation->setCreatedAtValue();
         $conversation->setUpdatedAtValue();
 
