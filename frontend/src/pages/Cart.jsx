@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { userRequest } from "../toolkit/requestMethods";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
+import Navbar from "../components/Navbar";
 import { removePublication } from "../redux/cartRedux";
 
 const Container = styled.div``;
@@ -181,7 +182,7 @@ const Cart = () => {
 
   return (
     <Container>
-      <Header />
+      <Navbar />
       <Wrapper>
         <Top>
           {

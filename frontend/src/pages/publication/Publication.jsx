@@ -9,6 +9,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { addPublication } from "../../redux/cartRedux";
 import Header from "../../components/header/Header";
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 const StyledContainer = styled.div`
@@ -147,7 +148,7 @@ console.log(publication);
 
   return (
     <>
-    <Header />
+    <Navbar />
       <StyledContainer>
         <Grid container>
           <Grid item xs={12} md={6} className="image-wrapper">

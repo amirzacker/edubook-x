@@ -3,6 +3,7 @@ import MySideNav from "./sideNav/MySideNav";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./header/Header";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const MainLayout = styled.div`
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header />
+      <Navbar />
       <MainLayout>
         <MySideNav sidebaropen={sidebaropen} setSidebarOpen={setSidebarOpen} />
         <Content $sidebaropen={sidebaropen}>

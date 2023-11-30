@@ -6,6 +6,7 @@ import { register, login } from "../redux/apiCalls";
 
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import logo from "../components/header/logo.png";
 
@@ -127,7 +128,7 @@ const Register = () => {
 
   return (
     <>
-      <Header />
+      <Navbar />
       <Container>
         <Wrapper>
           <Title>CRÉER UN COMPTE</Title>

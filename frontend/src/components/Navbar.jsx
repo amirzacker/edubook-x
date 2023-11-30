@@ -6,9 +6,17 @@ import { mobile } from "../toolkit/responsive";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/apiCalls";
+
 const Container = styled.div`
   height-min: 60px; 
    align-items: center; 
+
+    background: 	#d63333;
   ${mobile({ height: "50px" })}
 `;
 
@@ -77,14 +85,26 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+ 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity); 
+   const user = useSelector((state) => state.user.currentUser);
+    const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+
+   const handleLogout = () => {
+    logout(dispatch);
+    navigate("/login"); // Rediriger vers la page de connexion après la déconnexion
+  };
+
   return (
     <Container>
       <Wrapper>
         <Left>
           {/* <Language>EN</Language> */}
-         <Logo>LAMA.</Logo>
+         <Logo>EduBookX</Logo>
         </Left>
         <Center>
             <SearchContainer>
@@ -94,10 +114,29 @@ const Navbar = () => {
         </Center>
         <Right>
 
-    
-          <Link to="/cart">
+             {user ? (
+            <>
+              <Link onClick={() => navigate("/dashboard")}>
+                <Person />
+              </Link>
+              <Link onClick={handleLogout}>
+                <ExitToAppIcon style={{ marginLeft: 35 }} />
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link onClick={() => navigate("/register")}>
+                <MenuItem>S'INSCRIRE</MenuItem>
+              </Link>
+              <Link onClick={() => navigate("/login")}>
+                <MenuItem>SE CONNECTER</MenuItem>
+              </Link>
+            </>
+          )}
+
+          <Link onClick={() => navigate("/cart")}>
             <MenuItem>
-              <Badge badgeContent={quantity} color="primary">
+              <Badge badgeContent={quantity} color="secondary">
                 <ShoppingCartOutlined />
               </Badge>
             </MenuItem>

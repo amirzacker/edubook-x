@@ -2,7 +2,7 @@ import axios from "axios";
 import { refreshToken } from "../redux/apiCalls";
 import { store } from "../redux/store";
 
-const BASE_URL = "http://localhost:8000/api/";
+const BASE_URL = "https://localhost:8000/api/";
 
 export const publicRequest = axios.create({ baseURL: BASE_URL });
 

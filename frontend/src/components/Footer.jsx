@@ -13,7 +13,7 @@ import { mobile } from "../toolkit/responsive";
 const Container = styled.div`
   display: flex;
   color: white;
-  background: teal;
+ background: 	#d63333;
   ${mobile({ flexDirection: "column" })}
 `;
 

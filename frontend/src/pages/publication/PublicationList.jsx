@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import { mobile } from "../../toolkit/responsive";
 import { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
+import Navbar from "../../components/Navbar";
 import { publicRequest } from "../../toolkit/requestMethods";
 
 const Container = styled.div``;
@@ -51,7 +52,7 @@ const PublicationList = () => {
 
   return (
     <>
-      <Header />
+      <Navbar />
       <Container>
         <FilterContainer>
           <Filter>

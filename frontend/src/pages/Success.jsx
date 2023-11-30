@@ -5,6 +5,7 @@ import { userRequest } from "../toolkit/requestMethods";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { removeAllPublications } from "../redux/cartRedux";
 
@@ -65,7 +66,7 @@ const Success = () => {
 
   return (
     <>
-      <Header />
+      <Navbar />
       <div
         style={{
           height: "70vh",
